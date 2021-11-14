@@ -4,12 +4,21 @@
  */
 package com.aradnab.code_gen;
 
+import com.aradnab.code_gen.controllers.DBController;
+import com.aradnab.code_gen.models.DB;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author kanishka
  */
 public class Main {
     public static void main(String[] args) {
-        
+        try {
+            DBController.defaultController.getDatabaseDetails();
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
