@@ -9,8 +9,8 @@ package com.aradnab.code_gen.models;
  * @author kanishka
  */
 public class Column {
-    String initName;
-    DataType dataType;
+    String sqlName;
+    String sqlDataType;
     boolean isPrimaryKey;
     boolean isNull;
     boolean isAutoIncrement;

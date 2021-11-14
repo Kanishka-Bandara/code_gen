@@ -136,4 +136,11 @@ public class DB {
       }
         return l;
     }
+    
+    public static ResultSet getColumnDetails(String table) throws Exception {
+        if (c == null) {
+            setNewConnection();
+        }
+        return c.getMetaData().getColumns(null, null, table, "%");
+    }
 }
