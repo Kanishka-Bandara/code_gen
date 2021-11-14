@@ -12,4 +12,6 @@ public class Column {
     String initName;
     DataType dataType;
     boolean isPrimaryKey;
+    boolean isNull;
+    boolean isAutoIncrement;
 }

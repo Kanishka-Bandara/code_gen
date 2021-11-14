@@ -4,13 +4,11 @@
  */
 package com.aradnab.code_gen.models;
 
-import java.util.List;
-
 /**
  *
  * @author kanishka
  */
-public class Table {
-    String initName;
-    List<Column> columns;
+public class Database {
+    String dbNameInit;
+    
 }
