@@ -17,10 +17,16 @@ public class Table {
     private List<Column> columns = new ArrayList<>();
 
     public Table() {
+        columns = new ArrayList<>();
     }
 
-    public Table(String initName, List<Column> columns) {
+    public Table(String initName) {
+        this();
         this.initName = initName;
+    }
+    
+    public Table(String initName, List<Column> columns) {
+        this(initName);
         this.columns = columns;
     }
 
