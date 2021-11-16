@@ -4,14 +4,88 @@
  */
 package com.aradnab.code_gen.models;
 
+import com.mysql.cj.MysqlType;
+
 /**
  *
  * @author kanishka
  */
 public class Column {
-    String sqlName;
-    String sqlDataType;
-    boolean isPrimaryKey;
-    boolean isNull;
-    boolean isAutoIncrement;
+    private String sqlName;
+    private MysqlType sqlDataType;
+    private String defaultValue;
+    private boolean isPrimaryKey;
+    private boolean isNull;
+    private boolean isAutoIncrement;
+
+    public Column() {
+    }
+    
+    public Column(String sqlName, MysqlType sqlDataType, String defaultValue, boolean isNull, boolean isAutoIncrement) {
+        this.sqlName = sqlName;
+        this.sqlDataType = sqlDataType;
+        this.defaultValue = defaultValue;
+        this.isNull = isNull;
+        this.isAutoIncrement = isAutoIncrement;
+    }
+    
+    public Column(String sqlName, MysqlType sqlDataType, String defaultValue, boolean isPrimaryKey, boolean isNull, boolean isAutoIncrement) {
+        this.sqlName = sqlName;
+        this.sqlDataType = sqlDataType;
+        this.defaultValue = defaultValue;
+        this.isPrimaryKey = isPrimaryKey;
+        this.isNull = isNull;
+        this.isAutoIncrement = isAutoIncrement;
+    }
+
+    public boolean isIsAutoIncrement() {
+        return isAutoIncrement;
+    }
+
+    public void setIsAutoIncrement(boolean isAutoIncrement) {
+        this.isAutoIncrement = isAutoIncrement;
+    }
+
+    public String getSqlName() {
+        return sqlName;
+    }
+
+    public void setSqlName(String sqlName) {
+        this.sqlName = sqlName;
+    }
+
+    public MysqlType getSqlDataType() {
+        return sqlDataType;
+    }
+
+    public void setSqlDataType(MysqlType sqlDataType) {
+        this.sqlDataType = sqlDataType;
+    }
+
+    public String getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
+    }
+
+    public boolean isIsPrimaryKey() {
+        return isPrimaryKey;
+    }
+
+    public void setIsPrimaryKey(boolean isPrimaryKey) {
+        this.isPrimaryKey = isPrimaryKey;
+    }
+
+    public boolean isIsNull() {
+        return isNull;
+    }
+
+    public void setIsNull(boolean isNull) {
+        this.isNull = isNull;
+    }
+    
+    
+    
 }
