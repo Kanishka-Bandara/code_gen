@@ -85,7 +85,10 @@ public class Column {
     public void setIsNull(boolean isNull) {
         this.isNull = isNull;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Column{" + "sqlName=" + sqlName + ", sqlDataType=" + sqlDataType + ", defaultValue=" + defaultValue + ", isPrimaryKey=" + isPrimaryKey + ", isNull=" + isNull + ", isAutoIncrement=" + isAutoIncrement + '}';
+    }
     
 }
