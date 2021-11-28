@@ -55,6 +55,8 @@ public class GramaCodeGenerateController {
       controllerRegister_1_Importers.add("require '../../config/formType.php';");
       controllerRegister_1_Importers.add("require '../../config/form_status.php';");
       controllerRegister_1_Importers.add("");
+      controllerRegister_1_Importers.add("");
+      controllerRegister_1_Importers.add("");
       
       List<Table> tables = database.getTables();
 //      Looping tables

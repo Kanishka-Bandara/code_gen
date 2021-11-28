@@ -4,6 +4,7 @@
  */
 package com.aradnab.code_gen.models;
 
+import com.aradnab.code_gen.Comman.Helper;
 import com.mysql.cj.MysqlType;
 
 /**
@@ -89,6 +90,14 @@ public class Column {
     @Override
     public String toString() {
         return "Column{" + "sqlName=" + sqlName + ", sqlDataType=" + sqlDataType + ", defaultValue=" + defaultValue + ", isPrimaryKey=" + isPrimaryKey + ", isNull=" + isNull + ", isAutoIncrement=" + isAutoIncrement + '}';
+    }
+    
+    public String getColumnNameInCamelCase(){
+       return Helper.defaultHelper.snakeCaseToCamelCase(this.sqlName);
+    }
+    
+    public String getColumnNameAsPHPVariable(){
+       return "$"+this.getColumnNameInCamelCase();
     }
     
 }
