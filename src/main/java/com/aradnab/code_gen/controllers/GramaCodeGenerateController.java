@@ -4,9 +4,12 @@
  */
 package com.aradnab.code_gen.controllers;
 
+import com.aradnab.code_gen.models.Column;
 import com.aradnab.code_gen.models.Database;
+import com.aradnab.code_gen.models.Table;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  *
@@ -41,15 +44,19 @@ public class GramaCodeGenerateController {
       
       
 //      System.out.println("##### [Database = "+database.getSqlName()+"] #####");
-//      List<Table> tables = database.getTables();
-//      for (Table table : tables) {
+      List<Table> tables = database.getTables();
+//      Looping tables
+      for (Table table : tables) {
+          System.out.println(table.getCreateStatement());
 //          System.out.println("--[Table = "+table.getInitName()+"]--");
 //          List<Column> columns = table.getColumns();
 //          for (Column column : columns) {
 //              System.out.println(column.toString());
 //          }
 //          System.out.println("------");
-//      }
+      }
+      
+      
   }
   
   public void createFolder(File folder,String name){

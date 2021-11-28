@@ -55,4 +55,27 @@ public class Table {
         return "Table{" + "initName=" + initName + ", columns=" + columns + '}';
     }
     
+    public String getCreateStatement(){
+        String query = "INSERT INTO `"+this.initName+"` (";
+        String queryFields = "";
+        for (Column column : columns) {
+            if (!column.getSqlName().equals("id")) {
+                query+=column.getSqlName()+",";
+                queryFields+="";
+            }
+        }
+        //Remove last ,
+        query = query.substring(0, query.length()-1);
+        query+=") VALUES (";
+        for (Column column : columns) {
+            if (!column.getSqlName().equals("id")) {
+                query+=":"+column.getSqlName()+",";
+            }
+        }
+        //Remove last ,
+        query = query.substring(0, query.length()-1);
+        query+=");";
+        return query;
+    }
+    
 }
