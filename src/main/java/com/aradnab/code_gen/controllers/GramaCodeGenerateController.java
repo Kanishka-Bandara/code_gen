@@ -10,6 +10,7 @@ import com.aradnab.code_gen.models.Table;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Vector;
 
 /**
  *
@@ -41,9 +42,20 @@ public class GramaCodeGenerateController {
       createFolder(formFolder,"forms");
       //Creating controllers folder folder
       createFolder(controllersFolder,"Controllers");
+      //BEGIN::String holders
+      Vector<String> controllerRegister_1_Importers = new Vector<>();
+      //END::String holders
       
+      controllerRegister_1_Importers.add("<?php");
+      controllerRegister_1_Importers.add("require '../../config/db.php';");
+      controllerRegister_1_Importers.add("require '../../config/ImageHelper.php';");
+      controllerRegister_1_Importers.add("require '../../config/helpers.php';");
+      controllerRegister_1_Importers.add("require '../../config/status.php';");
+      controllerRegister_1_Importers.add("require '../../config/userType.php';");
+      controllerRegister_1_Importers.add("require '../../config/formType.php';");
+      controllerRegister_1_Importers.add("require '../../config/form_status.php';");
+      controllerRegister_1_Importers.add("");
       
-//      System.out.println("##### [Database = "+database.getSqlName()+"] #####");
       List<Table> tables = database.getTables();
 //      Looping tables
       for (Table table : tables) {
