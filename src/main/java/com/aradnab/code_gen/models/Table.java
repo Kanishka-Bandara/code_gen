@@ -61,19 +61,21 @@ public class Table {
         String queryFields = "";
         for (Column column : columns) {
             if (!column.getSqlName().equals("id")) {
-                query+=column.getSqlName()+",";
+                query+=column.getSqlName()+", ";
                 queryFields+="";
             }
         }
         //Remove last ,
+        query = query.trim();
         query = query.substring(0, query.length()-1);
         query+=") VALUES (";
         for (Column column : columns) {
             if (!column.getSqlName().equals("id")) {
-                query+=":"+column.getSqlName()+",";
+                query+=":"+column.getSqlName()+", ";
             }
         }
         //Remove last ,
+        query = query.trim();
         query = query.substring(0, query.length()-1);
         query+=");";
         return query;
@@ -86,6 +88,7 @@ public class Table {
             }
         }
         //Remove last ,
+        query = query.trim();
         query = query.substring(0, query.length()-1);
         query+=" WHERE `id` = :id;";
         return query;
