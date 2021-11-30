@@ -99,5 +99,12 @@ public class Column {
     public String getColumnNameAsPHPVariable(){
        return "$"+this.getColumnNameInCamelCase();
     }
+    public String getColumnHtmlFieldType(){
+        return this.sqlName.split("_")[2];
+    }
+    
+    public String getColumnHtmlSection(){
+        return this.sqlName.split("_")[0];
+    }
     
 }

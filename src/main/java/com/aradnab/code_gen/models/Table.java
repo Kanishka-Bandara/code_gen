@@ -4,6 +4,7 @@
  */
 package com.aradnab.code_gen.models;
 
+import com.aradnab.code_gen.Comman.Helper;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,6 +77,14 @@ public class Table {
         query = query.substring(0, query.length()-1);
         query+=");";
         return query;
+    }
+    
+    public String getNameInCamelCase(){
+        return Helper.defaultHelper.snakeCaseToCamelCase(this.initName);
+    }
+    
+    public String getCreateControllerFileName(){
+        return "register"+Helper.defaultHelper.snakeCaseToCamelCase(this.initName)+".php";
     }
     
 }
