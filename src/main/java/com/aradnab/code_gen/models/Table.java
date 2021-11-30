@@ -78,6 +78,18 @@ public class Table {
         query+=");";
         return query;
     }
+     public String getUpdateStatement(){
+        String query = "UPDATE `"+this.initName+"` SET ";
+        for (Column column : columns) {
+            if (!(column.getSqlName().equals("id") || column.getSqlName().equals("created_at"))) {
+                query+="`"+column.getSqlName()+"` = :"+column.getSqlName()+",";
+            }
+        }
+        //Remove last ,
+        query = query.substring(0, query.length()-1);
+        query+=" WHERE `id` = :id;";
+        return query;
+    }
     
     public String getNameInCamelCase(){
         return Helper.defaultHelper.snakeCaseToCamelCase(this.initName);

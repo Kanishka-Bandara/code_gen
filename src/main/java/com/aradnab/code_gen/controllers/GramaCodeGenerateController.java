@@ -131,6 +131,7 @@ public class GramaCodeGenerateController {
                 controllerRegister_1_Importers.add("");
                 controllerRegister_1_Importers.add("//Update Statement");
                 controllerRegister_1_Importers.add("");
+                controllerRegister_1_Importers.add("$sql = '"+table.getUpdateStatement()+"';");
                 controllerRegister_1_Importers.add("");
                 controllerRegister_1_Importers.add("}");
                 
