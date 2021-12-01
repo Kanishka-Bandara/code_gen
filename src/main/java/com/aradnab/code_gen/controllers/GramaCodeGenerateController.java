@@ -313,7 +313,7 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("require '../../config/db.php';");
         controllerRegister_1_Importers.add("require '../../config/helpers.php';");
         controllerRegister_1_Importers.add("");
-        controllerRegister_1_Importers.add("$query = 'SELECT COUNT(id) as `x` FROM formnic';");
+        controllerRegister_1_Importers.add("$query = 'SELECT COUNT(id) as `x` FROM "+table.getInitName()+"';");
         controllerRegister_1_Importers.add("$findStatement = $pdo->prepare($query);");
         controllerRegister_1_Importers.add("$findStatement->execute();");
         controllerRegister_1_Importers.add("$dbResp = $findStatement->fetchAll(PDO::FETCH_ASSOC);");
