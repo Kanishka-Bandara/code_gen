@@ -110,4 +110,7 @@ public class Table {
         return "delete"+Helper.defaultHelper.snakeCaseToCamelCase(this.initName)+".php";
     }
     
+    public String getFormIdGenerateControllerFileName(){
+        return "generate"+Helper.defaultHelper.snakeCaseToCamelCase(this.initName)+"FormId.php";
+    }
 }

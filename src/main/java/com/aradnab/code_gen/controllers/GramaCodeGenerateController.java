@@ -53,9 +53,9 @@ public class GramaCodeGenerateController {
             if (!(table.getInitName().equals("formnic") || table.getInitName().equals("users"))) {
                 this.generateRegisterAndUpdateFile(table, controllerFolderPath);
                 this.generateDeleteControllerFile(table, controllerFolderPath);
+                this.generateFormIdGenerateControllerFile(table, controllerFolderPath);
             }
         }
-
     }
 
     public void createFolder(File folder, String name) {
@@ -296,6 +296,34 @@ public class GramaCodeGenerateController {
         this.createFolder(controllerTableFolder, table.getNameInCamelCase());
         this.createFile(controllerTableDeleteFile, table.getDeleteControllerFileName());
         this.writeToFile(controllerTableDeleteFile, controllerRegister_1_Importers);
+        //END::Writing
+    }
+
+    public void generateFormIdGenerateControllerFile(Table table, String controllerFolderPath) throws IOException {
+        System.out.println(table.getInitName());
+        String controllerFolderTablePath = controllerFolderPath + "/" + table.getNameInCamelCase();
+        File controllerTableFolder = new File(controllerFolderTablePath);
+        String controllerDeleteFileTablePath = controllerFolderTablePath + "/" + table.getFormIdGenerateControllerFileName();
+        File controllerTableGenerateIdFile = new File(controllerDeleteFileTablePath);
+        //BEGIN::String holders
+        Vector<String> controllerRegister_1_Importers = new Vector<>();
+        //END::String holders
+
+        controllerRegister_1_Importers.add("<?php");
+        controllerRegister_1_Importers.add("require '../../config/db.php';");
+        controllerRegister_1_Importers.add("require '../../config/helpers.php';");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("$query = 'SELECT COUNT(id) as `x` FROM formnic';");
+        controllerRegister_1_Importers.add("$findStatement = $pdo->prepare($query);");
+        controllerRegister_1_Importers.add("$findStatement->execute();");
+        controllerRegister_1_Importers.add("$dbResp = $findStatement->fetchAll(PDO::FETCH_ASSOC);");
+        controllerRegister_1_Importers.add("echo str_pad(++$dbResp[0]['x'], 8, '0', STR_PAD_LEFT);");
+        controllerRegister_1_Importers.add("");
+
+        //BEGIN::Writing
+        this.createFolder(controllerTableFolder, table.getNameInCamelCase());
+        this.createFile(controllerTableGenerateIdFile, table.getDeleteControllerFileName());
+        this.writeToFile(controllerTableGenerateIdFile, controllerRegister_1_Importers);
         //END::Writing
     }
 
