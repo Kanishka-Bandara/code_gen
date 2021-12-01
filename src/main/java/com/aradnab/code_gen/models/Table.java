@@ -102,4 +102,8 @@ public class Table {
         return "register"+Helper.defaultHelper.snakeCaseToCamelCase(this.initName)+".php";
     }
     
+    public String getListFileName(){
+        return Helper.defaultHelper.snakeCaseToCamelCase(this.initName)+"-list.php";
+    }
+    
 }

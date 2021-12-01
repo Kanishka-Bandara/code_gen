@@ -50,102 +50,8 @@ public class GramaCodeGenerateController {
         List<Table> tables = database.getTables();
 //      Looping tables
         for (Table table : tables) {
-
             if (!(table.getInitName().equals("formnic") || table.getInitName().equals("users"))) {
-                System.out.println(table.getInitName());
-                String controllerFolderTablePath = controllerFolderPath + "/" + table.getNameInCamelCase();
-                File controllerTableFolder = new File(controllerFolderTablePath);
-                String controllerCreateFileTablePath = controllerFolderTablePath + "/" + table.getCreateControllerFileName();
-                File controllerTableCreateFile = new File(controllerCreateFileTablePath);
-                //BEGIN::String holders
-                Vector<String> controllerRegister_1_Importers = new Vector<>();
-                //END::String holders
-
-                controllerRegister_1_Importers.add("<?php");
-                controllerRegister_1_Importers.add("require '../../config/db.php';");
-                controllerRegister_1_Importers.add("require '../../config/ImageHelper.php';");
-                controllerRegister_1_Importers.add("require '../../config/helpers.php';");
-                controllerRegister_1_Importers.add("require '../../config/status.php';");
-                controllerRegister_1_Importers.add("require '../../config/userType.php';");
-                controllerRegister_1_Importers.add("require '../../config/formType.php';");
-                controllerRegister_1_Importers.add("require '../../config/form_status.php';");
-                controllerRegister_1_Importers.add("");
-                controllerRegister_1_Importers.add("");
-                controllerRegister_1_Importers.add("//BEGIN::Getting from variables");
-                controllerRegister_1_Importers.add("");
-                controllerRegister_1_Importers.add("$formType = $_POST['form_type'];");
-                controllerRegister_1_Importers.add("$userType = $_POST['user_type'];");
-                List<Column> columns = table.getColumns();
-                for (Column column : columns) {
-                    //TODO::ADD all the restriction
-//                    controllerRegister_1_Importers.add("");
-//                    controllerRegister_1_Importers.add("");
-                    if (column.getSqlName().equals("created_at")) {
-
-                    } else if (column.getSqlName().equals("updated_at")) {
-
-                    } else if (column.getSqlName().equals("status")) {
-
-                    } else if (column.getSqlName().equals("form_status")) {
-
-                    } else if (column.getSqlName().equals("id")) {
-
-                    } else {
-                        if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
-                            controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = null;");
-                            controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_GS) {");
-                        } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
-                            controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = null;");
-                            controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_DS) {");
-                        }
-                        if (column.getColumnHtmlFieldType().equals("img")) {
-                            controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = $_POST['" + column.getColumnNameInCamelCase() + "'];");
-                            controllerRegister_1_Importers.add("if (isset(" + column.getColumnNameAsPHPVariable() + ")) {");
-                            controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = ImageHelper::saveImage(" + column.getColumnNameAsPHPVariable() + ");");
-                            controllerRegister_1_Importers.add("}");
-                        } else {
-                            controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = $_POST['" + column.getColumnNameInCamelCase() + "'];");
-                        }
-
-                        if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
-                            controllerRegister_1_Importers.add("}");
-                        } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
-                            controllerRegister_1_Importers.add("}");
-                        }
-                    }
-                }
-                controllerRegister_1_Importers.add("");
-                controllerRegister_1_Importers.add("//END::Getting from variables");
-                controllerRegister_1_Importers.add("");
-                controllerRegister_1_Importers.add("//BEGIN::Save and edit function");
-                controllerRegister_1_Importers.add("");
-                controllerRegister_1_Importers.add("$sql = null;");
-                controllerRegister_1_Importers.add("");
-                controllerRegister_1_Importers.add("if ($_POST['formtype'] == $_FORM_TYPE_SAVE) {");
-                controllerRegister_1_Importers.add("");
-                controllerRegister_1_Importers.add("//Create Statement");
-                controllerRegister_1_Importers.add("");
-                controllerRegister_1_Importers.add("$sql = '"+table.getCreateStatement()+"';");
-                controllerRegister_1_Importers.add("");
-                controllerRegister_1_Importers.add("} else {");
-                controllerRegister_1_Importers.add("");
-                controllerRegister_1_Importers.add("//Update Statement");
-                controllerRegister_1_Importers.add("");
-                controllerRegister_1_Importers.add("$sql = '"+table.getUpdateStatement()+"';");
-                controllerRegister_1_Importers.add("");
-                controllerRegister_1_Importers.add("}");
-                
-                
-                
-                controllerRegister_1_Importers.add("");
-                controllerRegister_1_Importers.add("//END::Save and edit function");
-                controllerRegister_1_Importers.add("");
-                
-                //BEGIN::Writing
-                this.createFolder(controllerTableFolder, table.getNameInCamelCase());
-                this.createFile(controllerTableCreateFile, table.getCreateControllerFileName());
-                this.writeToFile(controllerTableCreateFile, controllerRegister_1_Importers);
-                //END::Writing
+                this.generateRegisterAndUpdateFile(table, controllerFolderPath);
             }
         }
 
@@ -207,6 +113,154 @@ public class GramaCodeGenerateController {
             bw.newLine();
         }
         bw.close();
+    }
+
+    public void generateRegisterAndUpdateFile(Table table, String controllerFolderPath) throws IOException {
+        System.out.println(table.getInitName());
+        String controllerFolderTablePath = controllerFolderPath + "/" + table.getNameInCamelCase();
+        File controllerTableFolder = new File(controllerFolderTablePath);
+        String controllerCreateFileTablePath = controllerFolderTablePath + "/" + table.getCreateControllerFileName();
+        File controllerTableCreateFile = new File(controllerCreateFileTablePath);
+        //BEGIN::String holders
+        Vector<String> controllerRegister_1_Importers = new Vector<>();
+        //END::String holders
+
+        controllerRegister_1_Importers.add("<?php");
+        controllerRegister_1_Importers.add("require '../../config/db.php';");
+        controllerRegister_1_Importers.add("require '../../config/ImageHelper.php';");
+        controllerRegister_1_Importers.add("require '../../config/helpers.php';");
+        controllerRegister_1_Importers.add("require '../../config/status.php';");
+        controllerRegister_1_Importers.add("require '../../config/userType.php';");
+        controllerRegister_1_Importers.add("require '../../config/formType.php';");
+        controllerRegister_1_Importers.add("require '../../config/form_status.php';");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("//BEGIN::Getting from variables");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("$formId = $_POST['formid'];");
+        controllerRegister_1_Importers.add("$formType = $_POST['form_type'];");
+        controllerRegister_1_Importers.add("$userType = $_POST['user_type'];");
+        controllerRegister_1_Importers.add("$userId = $_POST['user_id'];");
+        controllerRegister_1_Importers.add("");
+        List<Column> columns = table.getColumns();
+        for (Column column : columns) {
+            if (column.getSqlName().equals("created_at")) {
+//                        controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = date('Y-m-d H:i:s');");
+            } else if (column.getSqlName().equals("updated_at")) {
+//                        controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = date('Y-m-d H:i:s');");
+            } else if (column.getSqlName().equals("status")) {
+//                        controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = $_STATUS_LIVE;");
+            } else if (column.getSqlName().equals("form_status")) {
+
+            } else if (column.getSqlName().equals("id")) {
+
+            } else {
+                if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
+                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = null;");
+                    controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_GS) {");
+                } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
+                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = null;");
+                    controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_DS) {");
+                }
+                if (column.getColumnHtmlFieldType().equals("img")) {
+                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = $_POST['" + column.getColumnNameInCamelCase() + "'];");
+                    controllerRegister_1_Importers.add("if (isset(" + column.getColumnNameAsPHPVariable() + ")) {");
+                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = ImageHelper::saveImage(" + column.getColumnNameAsPHPVariable() + ");");
+                    controllerRegister_1_Importers.add("}");
+                } else {
+                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = $_POST['" + column.getColumnNameInCamelCase() + "'];");
+                }
+
+                if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
+                    controllerRegister_1_Importers.add("}");
+                } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
+                    controllerRegister_1_Importers.add("}");
+                }
+            }
+        }
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("//END::Getting from variables");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("//BEGIN::Save and edit function");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("$sql = null;");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("if ($formType == $_FORM_TYPE_SAVE) {");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("//Create Statement");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("$sql = '" + table.getCreateStatement() + "';");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("} else {");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("//Update Statement");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("$sql = '" + table.getUpdateStatement() + "';");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("}");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("//END::Save and edit function");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("$statement = $pdo->prepare($sql);");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("$processData = [];");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
+        columns.forEach(column -> {
+            if (column.getSqlName().equals("created_at")) {
+                controllerRegister_1_Importers.add("$processData['" + column.getSqlName() + "'] = date('Y-m-d H:i:s');");
+            } else if (column.getSqlName().equals("updated_at")) {
+                controllerRegister_1_Importers.add("$processData['" + column.getSqlName() + "'] = date('Y-m-d H:i:s');");
+            } else if (column.getSqlName().equals("status")) {
+                controllerRegister_1_Importers.add("$processData['" + column.getSqlName() + "'] = $_STATUS_LIVE;");
+            } else if (column.getSqlName().equals("form_status")) {
+                controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_CITIZEN) {");
+                controllerRegister_1_Importers.add("\t$processData['" + column.getSqlName() + "'] = $_FORM_TYPE_SUBMITTED;");
+                controllerRegister_1_Importers.add("}");
+
+                controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_GS) {");
+                controllerRegister_1_Importers.add("\t$processData['" + column.getSqlName() + "'] = $_FORM_TYPE_APPROVED;");
+                controllerRegister_1_Importers.add("}");
+
+                controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_DS) {");
+                controllerRegister_1_Importers.add("\t$processData['" + column.getSqlName() + "'] = $_FORM_TYPE_FINALIZED;");
+                controllerRegister_1_Importers.add("}");
+
+            } else if (column.getSqlName().equals("id")) {
+                controllerRegister_1_Importers.add("if ($formType != $_FORM_TYPE_SAVE) {");
+                controllerRegister_1_Importers.add("\t$processData['" + column.getSqlName() + "'] = $formId;");
+                controllerRegister_1_Importers.add("}");
+            } else {
+                if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
+                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = null;");
+                    controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_GS) {");
+                } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
+                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = null;");
+                    controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_DS) {");
+                }
+
+                controllerRegister_1_Importers.add("$processData['" + column.getSqlName() + "'] = " + column.getColumnNameAsPHPVariable() + ";");
+
+                if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
+                    controllerRegister_1_Importers.add("}");
+                } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
+                    controllerRegister_1_Importers.add("}");
+                }
+            }
+        });
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("$statement->execute($processData);");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("return redirect('../../Views/" + table.getListFileName() + "?success-msg=NIC Registration Success');");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
+
+        //BEGIN::Writing
+        this.createFolder(controllerTableFolder, table.getNameInCamelCase());
+        this.createFile(controllerTableCreateFile, table.getCreateControllerFileName());
+        this.writeToFile(controllerTableCreateFile, controllerRegister_1_Importers);
+        //END::Writing
     }
 
 }
