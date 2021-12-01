@@ -52,6 +52,7 @@ public class GramaCodeGenerateController {
         for (Table table : tables) {
             if (!(table.getInitName().equals("formnic") || table.getInitName().equals("users"))) {
                 this.generateRegisterAndUpdateFile(table, controllerFolderPath);
+                this.generateDeleteControllerFile(table, controllerFolderPath);
             }
         }
 
@@ -260,6 +261,41 @@ public class GramaCodeGenerateController {
         this.createFolder(controllerTableFolder, table.getNameInCamelCase());
         this.createFile(controllerTableCreateFile, table.getCreateControllerFileName());
         this.writeToFile(controllerTableCreateFile, controllerRegister_1_Importers);
+        //END::Writing
+    }
+
+    public void generateDeleteControllerFile(Table table, String controllerFolderPath) throws IOException {
+        System.out.println(table.getInitName());
+        String controllerFolderTablePath = controllerFolderPath + "/" + table.getNameInCamelCase();
+        File controllerTableFolder = new File(controllerFolderTablePath);
+        String controllerDeleteFileTablePath = controllerFolderTablePath + "/" + table.getDeleteControllerFileName();
+        File controllerTableDeleteFile = new File(controllerDeleteFileTablePath);
+        //BEGIN::String holders
+        Vector<String> controllerRegister_1_Importers = new Vector<>();
+        //END::String holders
+
+        controllerRegister_1_Importers.add("<?php");
+        controllerRegister_1_Importers.add("require '../../config/db.php';");
+        controllerRegister_1_Importers.add("require '../../config/helpers.php';");
+        controllerRegister_1_Importers.add("require '../../config/status.php';");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("$id=$_GET['id'];");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("$step=$pdo->prepare('UPDATE `" + table.getInitName() + "`");
+        controllerRegister_1_Importers.add("SET");
+        controllerRegister_1_Importers.add("`status` = :status");
+        controllerRegister_1_Importers.add("WHERE `id` = :id;');");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("$step->bindParam(\":id\",$id,PDO::PARAM_INT);");
+        controllerRegister_1_Importers.add("$step->bindParam(\":status\",$_STATUS_DELETE,PDO::PARAM_INT);");
+        controllerRegister_1_Importers.add("$step->execute();");
+        controllerRegister_1_Importers.add("return redirect('../../Views/" + table.getListFileName() + "?success-msg=NIC Form Deleted');");
+        controllerRegister_1_Importers.add("");
+
+        //BEGIN::Writing
+        this.createFolder(controllerTableFolder, table.getNameInCamelCase());
+        this.createFile(controllerTableDeleteFile, table.getDeleteControllerFileName());
+        this.writeToFile(controllerTableDeleteFile, controllerRegister_1_Importers);
         //END::Writing
     }
 

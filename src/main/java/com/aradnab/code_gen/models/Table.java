@@ -106,4 +106,8 @@ public class Table {
         return Helper.defaultHelper.snakeCaseToCamelCase(this.initName)+"-list.php";
     }
     
+    public String getDeleteControllerFileName(){
+        return "delete"+Helper.defaultHelper.snakeCaseToCamelCase(this.initName)+".php";
+    }
+    
 }
