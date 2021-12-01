@@ -113,4 +113,8 @@ public class Table {
     public String getFormIdGenerateControllerFileName(){
         return "generate"+Helper.defaultHelper.snakeCaseToCamelCase(this.initName)+"FormId.php";
     }
+    
+    public String getGetFormControllerFileName(){
+        return "get"+Helper.defaultHelper.snakeCaseToCamelCase(this.initName)+".php";
+    }
 }

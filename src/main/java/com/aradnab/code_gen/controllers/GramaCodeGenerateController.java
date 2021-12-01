@@ -54,6 +54,7 @@ public class GramaCodeGenerateController {
                 this.generateRegisterAndUpdateFile(table, controllerFolderPath);
                 this.generateDeleteControllerFile(table, controllerFolderPath);
                 this.generateFormIdGenerateControllerFile(table, controllerFolderPath);
+                this.generateGetFormDetailsControllerFile(table, controllerFolderPath);
             }
         }
     }
@@ -324,6 +325,36 @@ public class GramaCodeGenerateController {
         this.createFolder(controllerTableFolder, table.getNameInCamelCase());
         this.createFile(controllerTableGenerateIdFile, table.getDeleteControllerFileName());
         this.writeToFile(controllerTableGenerateIdFile, controllerRegister_1_Importers);
+        //END::Writing
+    }
+    
+    public void generateGetFormDetailsControllerFile(Table table, String controllerFolderPath) throws IOException {
+        System.out.println(table.getInitName());
+        String controllerFolderTablePath = controllerFolderPath + "/" + table.getNameInCamelCase();
+        File controllerTableFolder = new File(controllerFolderTablePath);
+        String controllerGetTablePath = controllerFolderTablePath + "/" + table.getGetFormControllerFileName();
+        File controllerGetTableDetailsFile = new File(controllerGetTablePath);
+        //BEGIN::String holders
+        Vector<String> controllerRegister_1_Importers = new Vector<>();
+        //END::String holders
+
+        controllerRegister_1_Importers.add("<?php");
+        controllerRegister_1_Importers.add("require '../../config/db.php';");
+        controllerRegister_1_Importers.add("require '../../config/helpers.php';");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("$id = $_GET['id'];");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("$findStatement = $pdo->prepare('SELECT * FROM `"+table.getInitName()+"` WHERE `id`=:id');");
+        controllerRegister_1_Importers.add("$findStatement->bindParam(':id', $id, PDO::PARAM_INT);");
+        controllerRegister_1_Importers.add("$findStatement->execute();");
+        controllerRegister_1_Importers.add("$getRecord=$findStatement->fetchAll(PDO::FETCH_ASSOC);");
+        controllerRegister_1_Importers.add("echo json_encode($getRecord[0]);");
+        controllerRegister_1_Importers.add("");
+
+        //BEGIN::Writing
+        this.createFolder(controllerTableFolder, table.getNameInCamelCase());
+        this.createFile(controllerGetTableDetailsFile, table.getGetFormControllerFileName());
+        this.writeToFile(controllerGetTableDetailsFile, controllerRegister_1_Importers);
         //END::Writing
     }
 
