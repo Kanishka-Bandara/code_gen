@@ -117,4 +117,9 @@ public class Table {
     public String getGetFormControllerFileName(){
         return "get"+Helper.defaultHelper.snakeCaseToCamelCase(this.initName)+".php";
     }
+    
+    public String getFormFileName(){
+        return Helper.defaultHelper.snakeCaseToCamelCase(this.initName)+"-form.php";
+    }
+
 }

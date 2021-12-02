@@ -314,7 +314,7 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("require '../../config/db.php';");
         controllerRegister_1_Importers.add("require '../../config/helpers.php';");
         controllerRegister_1_Importers.add("");
-        controllerRegister_1_Importers.add("$query = 'SELECT COUNT(id) as `x` FROM "+table.getInitName()+"';");
+        controllerRegister_1_Importers.add("$query = 'SELECT COUNT(id) as `x` FROM " + table.getInitName() + "';");
         controllerRegister_1_Importers.add("$findStatement = $pdo->prepare($query);");
         controllerRegister_1_Importers.add("$findStatement->execute();");
         controllerRegister_1_Importers.add("$dbResp = $findStatement->fetchAll(PDO::FETCH_ASSOC);");
@@ -327,7 +327,7 @@ public class GramaCodeGenerateController {
         this.writeToFile(controllerTableGenerateIdFile, controllerRegister_1_Importers);
         //END::Writing
     }
-    
+
     public void generateGetFormDetailsControllerFile(Table table, String controllerFolderPath) throws IOException {
         System.out.println(table.getInitName());
         String controllerFolderTablePath = controllerFolderPath + "/" + table.getNameInCamelCase();
@@ -344,7 +344,7 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("$id = $_GET['id'];");
         controllerRegister_1_Importers.add("");
-        controllerRegister_1_Importers.add("$findStatement = $pdo->prepare('SELECT * FROM `"+table.getInitName()+"` WHERE `id`=:id');");
+        controllerRegister_1_Importers.add("$findStatement = $pdo->prepare('SELECT * FROM `" + table.getInitName() + "` WHERE `id`=:id');");
         controllerRegister_1_Importers.add("$findStatement->bindParam(':id', $id, PDO::PARAM_INT);");
         controllerRegister_1_Importers.add("$findStatement->execute();");
         controllerRegister_1_Importers.add("$getRecord=$findStatement->fetchAll(PDO::FETCH_ASSOC);");
@@ -355,6 +355,92 @@ public class GramaCodeGenerateController {
         this.createFolder(controllerTableFolder, table.getNameInCamelCase());
         this.createFile(controllerGetTableDetailsFile, table.getGetFormControllerFileName());
         this.writeToFile(controllerGetTableDetailsFile, controllerRegister_1_Importers);
+        //END::Writing
+    }
+
+    public void generateFormFile(Table table, String formsHtmlFolderPath) throws IOException {
+        System.out.println(table.getInitName());
+        String formsHtmlPath = formsHtmlFolderPath + "/" + table.getGetFormControllerFileName();
+        File formsHtmlTableDetailsFile = new File(formsHtmlPath);
+        //BEGIN::String holders
+        Vector<String> controllerRegister_1_Importers = new Vector<>();
+        //END::String holders
+
+        controllerRegister_1_Importers.add("<div class=\"modal fade\" id=\"nicnewform\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"nicnewformLabel\"\n"
+                + "     aria-hidden=\"true\">");
+        controllerRegister_1_Importers.add("    <form enctype=\"multipart/form-data\" method=\"POST\" action=\"../Controllers/" + table.getNameInCamelCase() + "/" + table.getCreateControllerFileName() + "\"\n"
+                + "          onsubmit=\"generateApplicationNumber();return true;\">");
+        controllerRegister_1_Importers.add("        <input type=\"hidden\" id=\"formid\" name=\"formid\" value=\"\">");
+        controllerRegister_1_Importers.add("        <input type=\"hidden\" id=\"formtype\" name=\"formtype\" value=\"1\">");
+        controllerRegister_1_Importers.add("        <input type=\"hidden\" id=\"user_id\" name=\"user_id\" value=\"<?php print_r($_SESSION[\"auth\"]['id']) ?>\">");
+        controllerRegister_1_Importers.add("        <input type=\"hidden\" id=\"user_type\" name=\"user_type\" value=\"<?php print_r($_SESSION[\"auth\"]['type']) ?>\">");
+        controllerRegister_1_Importers.add("        <div class=\"modal-dialog modal-lg\" role=\"document\">");
+        controllerRegister_1_Importers.add("            <div class=\"modal-content\">");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                <div class=\"modal-header\">");
+        controllerRegister_1_Importers.add("                    <h5 class=\"modal-title\" id=\"nicnewformLabel\"><strong>%Form Header%</strong></h5>");
+        controllerRegister_1_Importers.add("                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">");
+        controllerRegister_1_Importers.add("                        <span aria-hidden=\"true\">&times;</span>");
+        controllerRegister_1_Importers.add("                    </button>");
+        controllerRegister_1_Importers.add("                </div>");
+        controllerRegister_1_Importers.add("");
+
+        controllerRegister_1_Importers.add("<div class=\"modal-body\">");//Begin::Model Body
+        controllerRegister_1_Importers.add("");
+
+        List<Column> columns = table.getColumns();
+        for (Column column : columns) {
+            if (column.getSqlName().equals("created_at")) {
+
+            } else if (column.getSqlName().equals("updated_at")) {
+//              
+            } else if (column.getSqlName().equals("status")) {
+//              
+            } else if (column.getSqlName().equals("form_status")) {
+
+            } else if (column.getSqlName().equals("id")) {
+
+            } else {
+                if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
+
+                } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
+
+                } else {
+                    if (column.getColumnHtmlFieldType().equals("img")) {
+
+                    } else {
+
+                    }
+                }
+            }
+        }
+
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
+
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                </div>");//End Model body
+
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                <div class=\"modal-footer\">");
+        controllerRegister_1_Importers.add("                    <button type=\"button\" class=\"btn btn-sm btn-secondary\" data-dismiss=\"modal\">Close</button>");
+        controllerRegister_1_Importers.add("                    <button type=\"submit\" class=\"btn btn-sm btn-primary\">Submit</button>");
+        controllerRegister_1_Importers.add("                </div>");
+        controllerRegister_1_Importers.add("");
+
+        controllerRegister_1_Importers.add("            </div>");
+        controllerRegister_1_Importers.add("        </div>");
+        controllerRegister_1_Importers.add("    </form>");
+        controllerRegister_1_Importers.add("</div>");
+        controllerRegister_1_Importers.add("");
+
+        //BEGIN::Writing
+//        this.createFolder(formsHtmlFolder, table.getNameInCamelCase());
+        this.createFile(formsHtmlTableDetailsFile, table.getGetFormControllerFileName());
+        this.writeToFile(formsHtmlTableDetailsFile, controllerRegister_1_Importers);
         //END::Writing
     }
 
