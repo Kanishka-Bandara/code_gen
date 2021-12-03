@@ -29,12 +29,16 @@ public class HtmlCodeGenerateController {
                 + "                        <hr>\n"
                 + "                    </div>\n"
                 + "                    <div class=\"col-md-12 mt-3\">\n";
-        if (section == 1) {
-            html += "                        <h6 for=\"\">Section 01: For Applicant</h6>\n";
-        } else if (section == 2) {
-            html += "                        <h6 for=\"\">Section 02: For Grama Niladari</h6>\n";
-        } else {
-            html += "                        <h6 for=\"\">Section 03: For official frank in Divisional Secretariat Office</h6>\n";
+        switch (section) {
+            case 1:
+                html += "                        <h6 for=\"\">Section 01: For Applicant</h6>\n";
+                break;
+            case 2:
+                html += "                        <h6 for=\"\">Section 02: For Grama Niladari</h6>\n";
+                break;
+            default:
+                html += "                        <h6 for=\"\">Section 03: For official frank in Divisional Secretariat Office</h6>\n";
+                break;
         }
 
         html += "                    </div>\n"
