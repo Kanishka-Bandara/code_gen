@@ -107,10 +107,16 @@ public class Column {
         return this.sqlName.split("_")[0];
     }
     
-    public String getHtmlName(){
-        String name = "";
-            
-        return name;
+    public int getColumnHtmlNumber(){
+        return Integer.parseInt(this.sqlName.split("_")[1].replaceAll("n", "").trim());
+    }
+    
+    public String getColumnHtmlNameToDisplay(){
+        return Helper.defaultHelper.snakeCaseToDisplay(this.sqlName);
+    }
+    
+    public String getColumnHtmlLabelId(){
+        return "lebel_"+this.getColumnNameInCamelCase();
     }
     
 }

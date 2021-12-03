@@ -389,6 +389,10 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("<div class=\"modal-body\">");//Begin::Model Body
         controllerRegister_1_Importers.add("");
 
+        Vector<String> s01 = new Vector<String>();
+        Vector<String> s02 = new Vector<String>();
+        Vector<String> s03 = new Vector<String>();
+        
         List<Column> columns = table.getColumns();
         for (Column column : columns) {
             if (column.getSqlName().equals("created_at")) {
@@ -407,13 +411,22 @@ public class GramaCodeGenerateController {
                 } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
                     
                 } else {
-                    if (column.getColumnHtmlFieldType().equals("img")) {
-                        
-                    } else {
-                        
-                    }
+                    s01.add(HtmlCodeGenerateController.defaultController.generateHtmlField(column));
                 }
             }
+        }
+        
+        controllerRegister_1_Importers.add(HtmlCodeGenerateController.defaultController.getSection01ForApplicant());
+        for (String html : s01) {
+            controllerRegister_1_Importers.add(html);
+        }
+        controllerRegister_1_Importers.add(HtmlCodeGenerateController.defaultController.getSection02ForGS());
+        for (String html : s02) {
+            controllerRegister_1_Importers.add(html);
+        }
+        controllerRegister_1_Importers.add(HtmlCodeGenerateController.defaultController.getSection03ForDS());
+        for (String html : s01) {
+            controllerRegister_1_Importers.add(html);
         }
 
         controllerRegister_1_Importers.add("");
