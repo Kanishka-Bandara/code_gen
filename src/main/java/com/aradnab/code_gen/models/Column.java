@@ -107,4 +107,10 @@ public class Column {
         return this.sqlName.split("_")[0];
     }
     
+    public String getHtmlName(){
+        String name = "";
+            
+        return name;
+    }
+    
 }

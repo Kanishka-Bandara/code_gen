@@ -55,6 +55,7 @@ public class GramaCodeGenerateController {
                 this.generateDeleteControllerFile(table, controllerFolderPath);
                 this.generateFormIdGenerateControllerFile(table, controllerFolderPath);
                 this.generateGetFormDetailsControllerFile(table, controllerFolderPath);
+                this.generateFormFile(table, formsHtmlFolderPath);
             }
         }
     }
@@ -391,25 +392,25 @@ public class GramaCodeGenerateController {
         List<Column> columns = table.getColumns();
         for (Column column : columns) {
             if (column.getSqlName().equals("created_at")) {
-
+                
             } else if (column.getSqlName().equals("updated_at")) {
 //              
             } else if (column.getSqlName().equals("status")) {
 //              
             } else if (column.getSqlName().equals("form_status")) {
-
+                
             } else if (column.getSqlName().equals("id")) {
-
+                
             } else {
                 if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
-
+                    
                 } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
-
+                    
                 } else {
                     if (column.getColumnHtmlFieldType().equals("img")) {
-
+                        
                     } else {
-
+                        
                     }
                 }
             }
