@@ -4,6 +4,7 @@
  */
 package com.aradnab.code_gen.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,8 +13,15 @@ import java.util.List;
  */
 public class Database {
     private String sqlName;
-    private List<Table> tables;
+    private List<Table> tables = new ArrayList<>();
 
+    public Database() {
+    }
+    
+    public Database(String sqlName) {
+        this.sqlName = sqlName;
+    }
+    
     public Database(String dbNameInit, List<Table> tables) {
         this.sqlName = dbNameInit;
         this.tables = tables;
@@ -33,6 +41,10 @@ public class Database {
 
     public void setSqlName(String sqlName) {
         this.sqlName = sqlName;
+    }
+    
+    public void addTable(Table table){
+        this.tables.add(table);
     }
 
     @Override

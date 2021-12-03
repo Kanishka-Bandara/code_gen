@@ -14,20 +14,22 @@ public class Helper {
     public static Helper defaultHelper = new Helper();
     
     public String snakeCaseToCamelCase(String word){
-        String s = "";
-        String[] split = word.split("_");
-        if (split.length>1) {
-            for (int i = 0;i<split.length;i++) {
-                if (i==0) {
-                    s+=split[i].toLowerCase();
-                } else {
-                    s+=split[i].substring(0, 1).toUpperCase()+split[i].substring(1, split.length).toLowerCase();
-                }
-            }
-        } else {
-            return word.toLowerCase();
-        }
-        return s;
+//        String s = "";
+//        System.out.print(word);
+//        String[] split = word.split("_");
+//        if (split.length>1) {
+//            for (int i = 0;i<split.length;i++) {
+//                if (i==0) {
+//                    s+=split[i].toLowerCase();
+//                } else {
+//                    s+=split[i].substring(0, 1).toUpperCase()+split[i].substring(1, split.length).toLowerCase();
+//                }
+//            }
+//        } else {
+//            return word.toLowerCase();
+//        }
+//        System.out.println(" = "+s);
+        return word;
     }
     
 //    private String convertCaseStyle(String word,CaseStyle from,CaseStyle to){
