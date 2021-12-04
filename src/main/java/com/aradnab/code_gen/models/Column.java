@@ -119,4 +119,33 @@ public class Column {
         return "lebel_"+this.getColumnNameInCamelCase();
     }
     
+    
+    public String getColumnJsId(){
+       return "id_"+Helper.defaultHelper.snakeCaseToCamelCase(this.sqlName);
+    }
+    
+    public String getColumnJsName(){
+       return Helper.defaultHelper.snakeCaseToCamelCase(this.sqlName);
+    }
+    
+    public String getColumnJsSectionId(){
+       return "id_section_"+Helper.defaultHelper.snakeCaseToCamelCase(this.sqlName);
+    }
+    
+    public String getColumnJsLabelId(){
+       return "id_lbl_"+Helper.defaultHelper.snakeCaseToCamelCase(this.sqlName);
+    }
+    
+    public String getColumnJsImageSrcPreviewId(){
+       return "id_img_display_"+Helper.defaultHelper.snakeCaseToCamelCase(this.sqlName);
+    }
+    
+    public String getColumnJsImagePreviewSectionId(){
+       return "id_img_display_section_"+Helper.defaultHelper.snakeCaseToCamelCase(this.sqlName);
+    }
+    
+    public String getColumnJsImageSrcPreviewName(){
+       return "name_img_display_"+Helper.defaultHelper.snakeCaseToCamelCase(this.sqlName);
+    }
+    
 }

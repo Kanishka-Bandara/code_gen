@@ -140,7 +140,7 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("//BEGIN::Getting from variables");
         controllerRegister_1_Importers.add("");
-        controllerRegister_1_Importers.add("$formId = $_POST['formid'];");
+        controllerRegister_1_Importers.add("$formId = $_POST['form_id'];");
         controllerRegister_1_Importers.add("$formType = $_POST['form_type'];");
         controllerRegister_1_Importers.add("$userType = $_POST['user_type'];");
         controllerRegister_1_Importers.add("$userId = $_POST['user_id'];");
@@ -361,7 +361,7 @@ public class GramaCodeGenerateController {
 
     public void generateFormFile(Table table, String formsHtmlFolderPath) throws IOException {
         System.out.println(table.getInitName());
-        String formsHtmlPath = formsHtmlFolderPath + "/" + table.getGetFormControllerFileName();
+        String formsHtmlPath = formsHtmlFolderPath + "/" + table.getFormFileName();
         File formsHtmlTableDetailsFile = new File(formsHtmlPath);
         //BEGIN::String holders
         Vector<String> controllerRegister_1_Importers = new Vector<>();
@@ -371,8 +371,8 @@ public class GramaCodeGenerateController {
                 + "     aria-hidden=\"true\">");
         controllerRegister_1_Importers.add("    <form enctype=\"multipart/form-data\" method=\"POST\" action=\"../Controllers/" + table.getNameInCamelCase() + "/" + table.getCreateControllerFileName() + "\"\n"
                 + "          onsubmit=\"generateApplicationNumber();return true;\">");
-        controllerRegister_1_Importers.add("        <input type=\"hidden\" id=\"formid\" name=\"formid\" value=\"\">");
-        controllerRegister_1_Importers.add("        <input type=\"hidden\" id=\"formtype\" name=\"formtype\" value=\"1\">");
+        controllerRegister_1_Importers.add("        <input type=\"hidden\" id=\"form_id\" name=\"form_id\" value=\"\">");
+        controllerRegister_1_Importers.add("        <input type=\"hidden\" id=\"form_type\" name=\"form_type\" value=\"1\">");
         controllerRegister_1_Importers.add("        <input type=\"hidden\" id=\"user_id\" name=\"user_id\" value=\"<?php print_r($_SESSION[\"auth\"]['id']) ?>\">");
         controllerRegister_1_Importers.add("        <input type=\"hidden\" id=\"user_type\" name=\"user_type\" value=\"<?php print_r($_SESSION[\"auth\"]['type']) ?>\">");
         controllerRegister_1_Importers.add("        <div class=\"modal-dialog modal-lg\" role=\"document\">");
@@ -388,52 +388,62 @@ public class GramaCodeGenerateController {
 
         controllerRegister_1_Importers.add("<div class=\"modal-body\">");//Begin::Model Body
         controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
 
         Vector<String> s01 = new Vector<String>();
         Vector<String> s02 = new Vector<String>();
         Vector<String> s03 = new Vector<String>();
-        
+
         List<Column> columns = table.getColumns();
         for (Column column : columns) {
             if (column.getSqlName().equals("created_at")) {
-                
+
             } else if (column.getSqlName().equals("updated_at")) {
 //              
             } else if (column.getSqlName().equals("status")) {
 //              
             } else if (column.getSqlName().equals("form_status")) {
-                
+
             } else if (column.getSqlName().equals("id")) {
-                
+
             } else {
                 if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
-                    
+                    s02.add(HtmlCodeGenerateController.defaultController.generateHtmlField(column));
                 } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
-                    
+                    s03.add(HtmlCodeGenerateController.defaultController.generateHtmlField(column));
                 } else {
                     s01.add(HtmlCodeGenerateController.defaultController.generateHtmlField(column));
                 }
             }
         }
-        
+
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                        <!--                    BEGIN::Applicant Section-->");
+        controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add(HtmlCodeGenerateController.defaultController.getSection01ForApplicant());
         for (String html : s01) {
             controllerRegister_1_Importers.add(html);
         }
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                        <!--                    END::Applicant Section-->");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                        <!--                    BEGIN::Grama Niladari Section-->");
+        controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add(HtmlCodeGenerateController.defaultController.getSection02ForGS());
         for (String html : s02) {
             controllerRegister_1_Importers.add(html);
         }
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                        <!--                    END::Grama Niladari Section-->");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                        <!--                    BEGIN::Divisional secretariat Section-->");
+        controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add(HtmlCodeGenerateController.defaultController.getSection03ForDS());
-        for (String html : s01) {
+        for (String html : s03) {
             controllerRegister_1_Importers.add(html);
         }
-
         controllerRegister_1_Importers.add("");
-        controllerRegister_1_Importers.add("");
-        controllerRegister_1_Importers.add("");
-
-        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                        <!--                    END::Divisional secretariat Section-->");
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("                </div>");//End Model body
@@ -453,7 +463,7 @@ public class GramaCodeGenerateController {
 
         //BEGIN::Writing
 //        this.createFolder(formsHtmlFolder, table.getNameInCamelCase());
-        this.createFile(formsHtmlTableDetailsFile, table.getGetFormControllerFileName());
+        this.createFile(formsHtmlTableDetailsFile, table.getFormFileName());
         this.writeToFile(formsHtmlTableDetailsFile, controllerRegister_1_Importers);
         //END::Writing
     }

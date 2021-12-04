@@ -54,48 +54,48 @@ public class HtmlCodeGenerateController {
     public String generateHtmlField(Column c) {
 
         if (c.getSqlName().toLowerCase().contains("gender")) {
-            return "                    <div class=\"col-md-12 mt-3\">\n"
+            return "                    <div class=\"col-md-12 mt-3\" id = \"" + c.getColumnJsSectionId() + "\">\n"
                     + "                        <label for=\"\"><strong>" + (c.getColumnHtmlNumber() == 0 ? "" : c.getColumnHtmlNumber() + ".") + "Gender</strong></label>\n"
                     + "                        <br>\n"
                     + "                        <div class=\"form-check form-check-inline\">\n"
-                    + "                            <input required class=\"form-check-input\" type=\"radio\" name=\"" + c.getColumnNameInCamelCase() + "\" id=\"" + c.getColumnNameInCamelCase() + "1\" value=\"1\">\n"
-                    + "                            <label class=\"form-check-label\" for=\"" + c.getColumnNameInCamelCase() + "1\">Male</label>\n"
+                    + "                            <input required class=\"form-check-input\" type=\"radio\" name=\"" + c.getColumnJsName() + "\" id=\"" + c.getColumnJsId() + "1\" value=\"1\">\n"
+                    + "                            <label class=\"form-check-label\" for=\"" + c.getColumnJsId() + "1\">Male</label>\n"
                     + "                        </div>\n"
                     + "                        <div class=\"form-check form-check-inline\">\n"
-                    + "                            <input required class=\"form-check-input\" type=\"radio\" name=\"" + c.getColumnNameInCamelCase() + "\" id=\"" + c.getColumnNameInCamelCase() + "2\" value=\"2\">\n"
-                    + "                            <label class=\"form-check-label\" for=\"" + c.getColumnNameInCamelCase() + "2\">Female</label>\n"
+                    + "                            <input required class=\"form-check-input\" type=\"radio\" name=\"" + c.getColumnJsName() + "\" id=\"" + c.getColumnJsId() + "2\" value=\"2\">\n"
+                    + "                            <label class=\"form-check-label\" for=\"" + c.getColumnJsId() + "2\">Female</label>\n"
                     + "                        </div>\n"
                     + "                    </div>";
         } else if (c.getSqlName().toLowerCase().contains("civil_status")) {
-            return "<div class=\"col-md-12 mt-3\">\n"
+            return "<div class=\"col-md-12 mt-3\" id = \"" + c.getColumnJsSectionId() + "\">\n"
                     + "                        <label for=\"\"><strong>" + (c.getColumnHtmlNumber() == 0 ? "" : c.getColumnHtmlNumber() + ".") + "Civil Status</strong></label>\n"
                     + "                        <br>\n"
                     + "                        <div class=\"form-check form-check-inline\">\n"
-                    + "                            <input required class=\"form-check-input\" type=\"radio\" name=\"civilstatus\" id=\"civilstatus1\"\n"
+                    + "                            <input required class=\"form-check-input\" type=\"radio\" name=\"" + c.getColumnJsName() + "\" id=\"" + c.getColumnJsId() + "1\"\n"
                     + "                                   value=\"1\">\n"
-                    + "                            <label class=\"form-check-label\" for=\"civilstatus1\">Married</label>\n"
+                    + "                            <label class=\"form-check-label\" for=\"" + c.getColumnJsId() + "1\">Married</label>\n"
                     + "                        </div>\n"
                     + "                        <div class=\"form-check form-check-inline\">\n"
-                    + "                            <input required class=\"form-check-input\" type=\"radio\" name=\"civilstatus\" id=\"civilstatus2\"\n"
+                    + "                            <input required class=\"form-check-input\" type=\"radio\" name=\"" + c.getColumnJsName() + "\" id=\"" + c.getColumnJsId() + "2\"\n"
                     + "                                   value=\"2\">\n"
-                    + "                            <label class=\"form-check-label\" for=\"civilstatus2\">Single</label>\n"
+                    + "                            <label class=\"form-check-label\" for=\"" + c.getColumnJsId() + "2\">Single</label>\n"
                     + "                        </div>\n"
                     + "                        <div class=\"form-check form-check-inline\">\n"
-                    + "                            <input required class=\"form-check-input\" type=\"radio\" name=\"civilstatus\" id=\"civilstatus3\"\n"
+                    + "                            <input required class=\"form-check-input\" type=\"radio\" name=\"" + c.getColumnJsName() + "\" id=\"" + c.getColumnJsId() + "3\"\n"
                     + "                                   value=\"3\">\n"
-                    + "                            <label class=\"form-check-label\" for=\"civilstatus3\">Widowed</label>\n"
+                    + "                            <label class=\"form-check-label\" for=\"" + c.getColumnJsId() + "3\">Widowed</label>\n"
                     + "                        </div>\n"
                     + "                        <div class=\"form-check form-check-inline\">\n"
-                    + "                            <input required class=\"form-check-input\" type=\"radio\" name=\"civilstatus\" id=\"civilstatus4\"\n"
+                    + "                            <input required class=\"form-check-input\" type=\"radio\" name=\"" + c.getColumnJsName() + "\" id=\"" + c.getColumnJsId() + "4\"\n"
                     + "                                   value=\"4\">\n"
-                    + "                            <label class=\"form-check-label\" for=\"civilstatus4\">Divorced</label>\n"
+                    + "                            <label class=\"form-check-label\" for=\"" + c.getColumnJsId() + "4\">Divorced</label>\n"
                     + "                        </div>\n"
                     + "                    </div>";
         } else if (c.getSqlName().toLowerCase().contains("district")) {
-            return "                        <div class=\"form-group row\">\n"
+            return "                        <div class=\"form-group row\" id = \"" + c.getColumnJsSectionId() + "\">\n"
                     + "                            <label class=\"col-md-4 col-form-label\">" + c.getColumnHtmlNameToDisplay() + "</label>\n"
                     + "                            <div class=\"col-md-4\">\n"
-                    + "                                <select required class=\"form-control\" name=\"" + c.getColumnNameInCamelCase() + "\" id=\"" + c.getColumnNameInCamelCase() + "\">\n"
+                    + "                                <select required class=\"form-control\" name=\"" + c.getColumnJsName() + "\" id=\"" + c.getColumnJsId() + "\">\n"
                     + "                                    <option selected disabled value=\"\">-Select-</option>\n"
                     + "                                    <?php\n"
                     + "                                    foreach (getDistrictDivitions() as $keyDD => $valueDD) {\n"
@@ -108,9 +108,9 @@ public class HtmlCodeGenerateController {
                     + "                            </div>\n"
                     + "                        </div>";
         } else if (c.getSqlName().toLowerCase().contains("gn_division")) {
-            return "                        <div class=\"col-md-12\">\n"
+            return "                        <div class=\"col-md-12\" id = \"" + c.getColumnJsSectionId() + "\">\n"
                     + "                            <label><small>G.N Number & G.N Division</small></label>\n"
-                    + "                            <select required class=\"form-control\" name=\"" + c.getColumnNameInCamelCase() + "\" id=\"" + c.getColumnNameInCamelCase() + "\">\n"
+                    + "                            <select required class=\"form-control\" name=\"" + c.getColumnJsName() + "\" id=\"" + c.getColumnJsId() + "\">\n"
                     + "                                <option selected disabled value=\"\">-Select-</option>\n"
                     + "                                <?php\n"
                     + "                                foreach (getGD() as $keyGD => $valueGD1) {\n"
@@ -122,9 +122,9 @@ public class HtmlCodeGenerateController {
                     + "                            </select>\n"
                     + "                        </div>";
         } else if (c.getSqlName().toLowerCase().contains("ds_division")) {
-            return "                        <div class=\"col-md-12\">\n"
+            return "                        <div class=\"col-md-12\" id = \"" + c.getColumnJsSectionId() + "\">\n"
                     + "                            <label><small>D.S. Division</small></label>\n"
-                    + "                            <select required class=\"form-control\" name=\""+c.getColumnNameInCamelCase()+"\" id=\""+c.getColumnNameInCamelCase()+"\">\n"
+                    + "                            <select required class=\"form-control\" name=\"" + c.getColumnJsName() + "\" id=\"" + c.getColumnJsId() + "\">\n"
                     + "                                <option selected disabled value=\"\">-Select-</option>\n"
                     + "                                <?php\n"
                     + "                                foreach (getDistrictDivitions() as $keyDD => $valueDD) {\n"
@@ -137,7 +137,7 @@ public class HtmlCodeGenerateController {
                     + "                        </div>";
         }
 
-        String html = "                    <div class=\"col-md-12\">\n"
+        String html = "                    <div class=\"col-md-12\" id = \"" + c.getColumnJsSectionId() + "\">\n"
                 + "                        <div class=\"form-group row\">";
         if (c.getColumnHtmlNumber() == 0) {
             html += "                            <label class=\"col-md-4 col-form-label\" for=\"" + c.getColumnNameInCamelCase() + "\" id = \"" + c.getColumnHtmlLabelId() + "\">" + c.getColumnHtmlNameToDisplay() + "</label>";
@@ -147,9 +147,10 @@ public class HtmlCodeGenerateController {
             html += "                            <div class=\"col-md-8\">";
         }
         if (c.getColumnHtmlFieldType().equals("email")) {
-            html += "                                <input required id=\"" + c.getColumnNameInCamelCase() + "\" name=\"" + c.getColumnNameInCamelCase() + "\" type=\"email\" class=\"form-control\">";
+            html += "                                <input required id=\"" + c.getColumnJsId() + "\" name=\"" + c.getColumnJsName() + "\" type=\"email\" class=\"form-control\">";
         } else if (c.getColumnHtmlFieldType().equals("img")) {
-
+            html += "                                    <label for=\"" + c.getColumnJsId() + "\" id=\"label_signature\" class=\"btn btn-primary w-100\">Upload Image</label>";
+            html += "                                    <input id=\"" + c.getColumnJsId() + "\" name=\"" + c.getColumnJsName() + "\" class=\"d-none\" type=\"file\" onchange='setImage(this,\"citizen_signature_image\")'>";
         } else if (c.getColumnHtmlFieldType().equals("drp")) {
 
         } else if (c.getColumnHtmlFieldType().equals("cb")) {
@@ -157,11 +158,11 @@ public class HtmlCodeGenerateController {
         } else if (c.getColumnHtmlFieldType().equals("rb")) {
 
         } else if (c.getColumnHtmlFieldType().equals("dte")) {
-            html += "                                <input required id=\"" + c.getColumnNameInCamelCase() + "\" name=\"" + c.getColumnNameInCamelCase() + "\" type=\"date\" class=\"form-control\">";
+            html += "                                <input required id=\"" + c.getColumnJsId() + "\" name=\"" + c.getColumnJsName() + "\" type=\"date\" class=\"form-control\">";
         } else if (c.getColumnHtmlFieldType().equals("tel")) {
-            html += "                                <input required id=\"" + c.getColumnNameInCamelCase() + "\" name=\"" + c.getColumnNameInCamelCase() + "\" type=\"tel\" class=\"form-control\">";
+            html += "                                <input required id=\"" + c.getColumnJsId() + "\" name=\"" + c.getColumnJsName() + "\" type=\"tel\" class=\"form-control\">";
         } else {
-            html += "                                <input required id=\"" + c.getColumnNameInCamelCase() + "\" name=\"" + c.getColumnNameInCamelCase() + "\" type=\"text\" class=\"form-control\">";
+            html += "                                <input required id=\"" + c.getColumnJsId() + "\" name=\"" + c.getColumnJsName() + "\" type=\"text\" class=\"form-control\">";
         }
 
         html += "";
@@ -170,6 +171,13 @@ public class HtmlCodeGenerateController {
                 + "                        </div>\n"
                 + "                    </div>";
 
+        if (c.getColumnHtmlFieldType().equals("img")) {
+         html+="<div class=\"col-md-12\" id=\""+c.getColumnJsImagePreviewSectionId()+"\">\n" +
+"                        <label for=\"citizen_signature_image\">Attached "+(c.getSqlName().toLowerCase().contains("signature")?"Signature":"Image")+"</label>\n" +
+"                        <br>\n" +
+"                        <img id=\""+c.getColumnJsImageSrcPreviewId()+"\" name=\""+c.getColumnJsImageSrcPreviewName()+"\" src=\"/grama/Views/assets/img/sign_here.jpg\" alt=\"...\" class=\"img-thumbnail\" style=\"height: 200px;width: auto\">\n" +
+"                    </div>";
+        }
         return html;
     }
 
