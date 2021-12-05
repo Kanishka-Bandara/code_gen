@@ -25,7 +25,7 @@ public class GramaCodeGenerateController {
     boolean deleteExistingFiles = true;
 
     public void generate() throws Exception {
-        String projectName = "grama_1";
+        String projectName = "grama";
         String folderPath = "/opt/lampp/htdocs";
         String mainFolderPath = folderPath + "/" + projectName;
         String formListsHtmlFolderPath = mainFolderPath + "/Views";
@@ -644,11 +644,11 @@ public class GramaCodeGenerateController {
 
         controllerRegister_1_Importers.add("<script>");
 
-        controllerRegister_1_Importers.add("    generateNICApplicationNumber();");
+        controllerRegister_1_Importers.add("    generateApplicationNumber();");
         controllerRegister_1_Importers.add("    function generateApplicationNumber() {\n"
                 + "        $.ajax({\n"
                 + "            type: \"GET\",\n"
-                + "            url: \"../Controllers/" + table.getNameInCamelCase() + "/" + table.getFormFileName() + "\",\n"
+                + "            url: \"../Controllers/" + table.getNameInCamelCase() + "/" + table.getFormIdGenerateControllerFileName() + "\",\n"
                 + "            success: function (response) {\n"
                 + "                $('#applicationNo').val(response);\n"
                 + "            }\n"
