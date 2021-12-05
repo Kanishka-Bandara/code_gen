@@ -388,6 +388,13 @@ public class GramaCodeGenerateController {
 
         controllerRegister_1_Importers.add("<div class=\"modal-body\">");//Begin::Model Body
         controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("<div class=\"row\">\n"
+                + "                        <div class=\"col-md-12 text-center\">\n"
+                + "                            <h6><strong>%Main Header%</strong></h6>\n"
+                + "                            <p><small>%Sub Header or desc%</small></p>\n"
+                + "                        </div>\n"
+                + "                    </div>");
+        controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("");
 
         Vector<String> s01 = new Vector<String>();
@@ -404,6 +411,8 @@ public class GramaCodeGenerateController {
 //              
             } else if (column.getSqlName().equals("form_status")) {
 
+            } else if (column.getSqlName().equals("application_no")) {
+
             } else if (column.getSqlName().equals("id")) {
 
             } else {
@@ -418,6 +427,7 @@ public class GramaCodeGenerateController {
         }
 
         controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add(HtmlCodeGenerateController.defaultController.generateApplicationFormFieldSection());
         controllerRegister_1_Importers.add("                        <!--                    BEGIN::Applicant Section-->");
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add(HtmlCodeGenerateController.defaultController.getSection01ForApplicant());
@@ -465,6 +475,121 @@ public class GramaCodeGenerateController {
 //        this.createFolder(formsHtmlFolder, table.getNameInCamelCase());
         this.createFile(formsHtmlTableDetailsFile, table.getFormFileName());
         this.writeToFile(formsHtmlTableDetailsFile, controllerRegister_1_Importers);
+        //END::Writing
+    }
+
+    public void generateGetFormListFile(Table table, String formListsHtmlFolderPath) throws IOException {
+        System.out.println(table.getInitName());
+        String formsHtmlPath = formListsHtmlFolderPath + "/" + table.getListFileName();
+        File formsListFile = new File(formsHtmlPath);
+        List<Column> columns = table.getColumns();
+        //BEGIN::String holders
+        Vector<String> controllerRegister_1_Importers = new Vector<>();
+        //END::String holders
+
+        controllerRegister_1_Importers.add("<?php");
+        controllerRegister_1_Importers.add("require '../Models/auth.php';");
+        controllerRegister_1_Importers.add("require '../config/db.php';");
+        controllerRegister_1_Importers.add("require '../config/form_status.php';");
+        controllerRegister_1_Importers.add("require '../config/status.php';");
+        controllerRegister_1_Importers.add("require '../config/ImageHelper.php';");
+        controllerRegister_1_Importers.add("?>");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("<!DOCTYPE html>");
+        controllerRegister_1_Importers.add("<html lang=\"en\">");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("<head>\n"
+                + "\n"
+                + "    <meta charset=\"utf-8\">\n"
+                + "    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n"
+                + "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n"
+                + "    <meta name=\"description\" content=\"\">\n"
+                + "    <meta name=\"author\" content=\"\">\n"
+                + "    <link rel=\"shortcut icon\" type=\"image/jpg\" href=\"assets/favicon.ico\"/>\n"
+                + "    <title>Dashboard</title>\n"
+                + "    <link href=\"assets/vendor/fontawesome-free/css/all.min.css\" rel=\"stylesheet\" type=\"text/css\">\n"
+                + "    <link href=\"https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i\"\n"
+                + "          rel=\"stylesheet\">\n"
+                + "    <link href=\"assets/css/sb-admin-2.min.css\" rel=\"stylesheet\">\n"
+                + "    <link href=\"assets/vendor/datatables/dataTables.bootstrap4.min.css\" rel=\"stylesheet\">\n"
+                + "    <script src=\"assets/js/init.js\"></script>\n"
+                + "</head>");
+        controllerRegister_1_Importers.add("");
+
+        controllerRegister_1_Importers.add("<body id=\"page-top\">");
+
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
+
+        controllerRegister_1_Importers.add("<script>");
+
+        controllerRegister_1_Importers.add("    generateNICApplicationNumber();");
+        controllerRegister_1_Importers.add("    function generateApplicationNumber() {\n"
+                + "        $.ajax({\n"
+                + "            type: \"GET\",\n"
+                + "            url: \"../Controllers/" + table.getNameInCamelCase() + "/" + table.getFormFileName() + "\",\n"
+                + "            success: function (response) {\n"
+                + "                $('#applicationNo').val(response);\n"
+                + "            }\n"
+                + "        });\n"
+                + "    }");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("    function getRecords(id) {\n"
+                + "        $.ajax({\n"
+                + "            type: \"GET\",\n"
+                + "            url: \"../Controllers/NIC/getNIC.php?id=\" + id,\n"
+                + "            success: function (response) {\n"
+                + "                var data = JSON.parse(response);");
+
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
+
+        Vector<String> s01 = new Vector<String>();
+        Vector<String> s02 = new Vector<String>();
+        Vector<String> s03 = new Vector<String>();
+        for (Column column : columns) {
+            if (column.getSqlName().equals("created_at")) {
+
+            } else if (column.getSqlName().equals("updated_at")) {
+//              
+            } else if (column.getSqlName().equals("status")) {
+//              
+            } else if (column.getSqlName().equals("form_status")) {
+
+            } else if (column.getSqlName().equals("application_no")) {
+
+            } else if (column.getSqlName().equals("id")) {
+
+            } else {
+                if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
+                    s02.add(HtmlCodeGenerateController.defaultController.generateHtmlField(column));
+                } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
+                    s03.add(HtmlCodeGenerateController.defaultController.generateHtmlField(column));
+                } else {
+                    s01.add(HtmlCodeGenerateController.defaultController.generateHtmlField(column));
+                }
+            }
+        }
+
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
+
+        controllerRegister_1_Importers.add("                $('#nicnewform').modal('show');");
+        controllerRegister_1_Importers.add("            }\n"
+                + "        });\n"
+                + "    }");
+
+        controllerRegister_1_Importers.add("</script>");
+
+        controllerRegister_1_Importers.add("</body>");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("</html>");
+
+        //BEGIN::Writing
+        this.createFile(formsListFile, table.getListFileName());
+        this.writeToFile(formsListFile, controllerRegister_1_Importers);
         //END::Writing
     }
 
