@@ -427,7 +427,7 @@ public class GramaCodeGenerateController {
         }
 
         controllerRegister_1_Importers.add("");
-        controllerRegister_1_Importers.add(HtmlCodeGenerateController.defaultController.generateApplicationFormFieldSection());
+        controllerRegister_1_Importers.add(HtmlCodeGenerateController.defaultController.generateApplicationNoFormFieldSection());
         controllerRegister_1_Importers.add("                        <!--                    BEGIN::Applicant Section-->");
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add(HtmlCodeGenerateController.defaultController.getSection01ForApplicant());

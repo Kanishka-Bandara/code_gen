@@ -181,7 +181,7 @@ public class HtmlCodeGenerateController {
         return html;
     }
 
-    public String generateApplicationFormFieldSection() {
+    public String generateApplicationNoFormFieldSection() {
     String html = "                    <div class=\"row d-flex flex-row-reverse\">\n"
                 + "                        <div class=\"col-md-5\">\n"
                 + "                            <label for=\"applicationNo\"><small>Application No</small></label>\n"
