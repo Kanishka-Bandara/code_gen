@@ -100,6 +100,7 @@ public class Column {
        return "$"+this.getColumnNameInCamelCase();
     }
     public String getColumnHtmlFieldType(){
+        System.out.println(this.sqlName);
         return this.sqlName.split("_")[2];
     }
     

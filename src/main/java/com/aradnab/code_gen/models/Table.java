@@ -39,7 +39,7 @@ public class Table {
         this.columns = columns;
     }
 
-    public String getInitName() {
+    public String getSQLName() {
         return initName;
     }
 
@@ -120,6 +120,16 @@ public class Table {
     
     public String getFormFileName(){
         return Helper.defaultHelper.snakeCaseToCamelCase(this.initName)+"-form.php";
+    }
+    
+    public boolean isIncludedThisInTheColumnNames(String s){
+        boolean b = false;
+        for (Column column : columns) {
+            if (column.getSqlName().contains(s)) {
+                b = true;
+            }
+        }
+        return b;
     }
 
 }

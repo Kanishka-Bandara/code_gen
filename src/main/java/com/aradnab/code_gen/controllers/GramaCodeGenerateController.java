@@ -50,12 +50,13 @@ public class GramaCodeGenerateController {
         List<Table> tables = database.getTables();
 //      Looping tables
         for (Table table : tables) {
-            if (!(table.getInitName().equals("formnic") || table.getInitName().equals("users"))) {
+            if (!(table.getSQLName().equals("formnic") || table.getSQLName().equals("users"))) {
                 this.generateRegisterAndUpdateFile(table, controllerFolderPath);
                 this.generateDeleteControllerFile(table, controllerFolderPath);
                 this.generateFormIdGenerateControllerFile(table, controllerFolderPath);
                 this.generateGetFormDetailsControllerFile(table, controllerFolderPath);
                 this.generateFormFile(table, formsHtmlFolderPath);
+                this.generateGetFormListFile(table, formListsHtmlFolderPath);
             }
         }
     }
@@ -119,7 +120,7 @@ public class GramaCodeGenerateController {
     }
 
     public void generateRegisterAndUpdateFile(Table table, String controllerFolderPath) throws IOException {
-        System.out.println(table.getInitName());
+        System.out.println(table.getSQLName());
         String controllerFolderTablePath = controllerFolderPath + "/" + table.getNameInCamelCase();
         File controllerTableFolder = new File(controllerFolderTablePath);
         String controllerCreateFileTablePath = controllerFolderTablePath + "/" + table.getCreateControllerFileName();
@@ -156,6 +157,8 @@ public class GramaCodeGenerateController {
             } else if (column.getSqlName().equals("form_status")) {
 
             } else if (column.getSqlName().equals("id")) {
+
+            } else if (column.getSqlName().equals("application_no")) {
 
             } else {
                 if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
@@ -267,7 +270,7 @@ public class GramaCodeGenerateController {
     }
 
     public void generateDeleteControllerFile(Table table, String controllerFolderPath) throws IOException {
-        System.out.println(table.getInitName());
+        System.out.println(table.getSQLName());
         String controllerFolderTablePath = controllerFolderPath + "/" + table.getNameInCamelCase();
         File controllerTableFolder = new File(controllerFolderTablePath);
         String controllerDeleteFileTablePath = controllerFolderTablePath + "/" + table.getDeleteControllerFileName();
@@ -283,7 +286,7 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("$id=$_GET['id'];");
         controllerRegister_1_Importers.add("");
-        controllerRegister_1_Importers.add("$step=$pdo->prepare('UPDATE `" + table.getInitName() + "`");
+        controllerRegister_1_Importers.add("$step=$pdo->prepare('UPDATE `" + table.getSQLName() + "`");
         controllerRegister_1_Importers.add("SET");
         controllerRegister_1_Importers.add("`status` = :status");
         controllerRegister_1_Importers.add("WHERE `id` = :id;');");
@@ -302,7 +305,7 @@ public class GramaCodeGenerateController {
     }
 
     public void generateFormIdGenerateControllerFile(Table table, String controllerFolderPath) throws IOException {
-        System.out.println(table.getInitName());
+        System.out.println(table.getSQLName());
         String controllerFolderTablePath = controllerFolderPath + "/" + table.getNameInCamelCase();
         File controllerTableFolder = new File(controllerFolderTablePath);
         String controllerDeleteFileTablePath = controllerFolderTablePath + "/" + table.getFormIdGenerateControllerFileName();
@@ -315,7 +318,7 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("require '../../config/db.php';");
         controllerRegister_1_Importers.add("require '../../config/helpers.php';");
         controllerRegister_1_Importers.add("");
-        controllerRegister_1_Importers.add("$query = 'SELECT COUNT(id) as `x` FROM " + table.getInitName() + "';");
+        controllerRegister_1_Importers.add("$query = 'SELECT COUNT(id) as `x` FROM " + table.getSQLName() + "';");
         controllerRegister_1_Importers.add("$findStatement = $pdo->prepare($query);");
         controllerRegister_1_Importers.add("$findStatement->execute();");
         controllerRegister_1_Importers.add("$dbResp = $findStatement->fetchAll(PDO::FETCH_ASSOC);");
@@ -330,7 +333,7 @@ public class GramaCodeGenerateController {
     }
 
     public void generateGetFormDetailsControllerFile(Table table, String controllerFolderPath) throws IOException {
-        System.out.println(table.getInitName());
+        System.out.println(table.getSQLName());
         String controllerFolderTablePath = controllerFolderPath + "/" + table.getNameInCamelCase();
         File controllerTableFolder = new File(controllerFolderTablePath);
         String controllerGetTablePath = controllerFolderTablePath + "/" + table.getGetFormControllerFileName();
@@ -345,7 +348,7 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("$id = $_GET['id'];");
         controllerRegister_1_Importers.add("");
-        controllerRegister_1_Importers.add("$findStatement = $pdo->prepare('SELECT * FROM `" + table.getInitName() + "` WHERE `id`=:id');");
+        controllerRegister_1_Importers.add("$findStatement = $pdo->prepare('SELECT * FROM `" + table.getSQLName() + "` WHERE `id`=:id');");
         controllerRegister_1_Importers.add("$findStatement->bindParam(':id', $id, PDO::PARAM_INT);");
         controllerRegister_1_Importers.add("$findStatement->execute();");
         controllerRegister_1_Importers.add("$getRecord=$findStatement->fetchAll(PDO::FETCH_ASSOC);");
@@ -360,7 +363,7 @@ public class GramaCodeGenerateController {
     }
 
     public void generateFormFile(Table table, String formsHtmlFolderPath) throws IOException {
-        System.out.println(table.getInitName());
+        System.out.println(table.getSQLName());
         String formsHtmlPath = formsHtmlFolderPath + "/" + table.getFormFileName();
         File formsHtmlTableDetailsFile = new File(formsHtmlPath);
         //BEGIN::String holders
@@ -479,7 +482,7 @@ public class GramaCodeGenerateController {
     }
 
     public void generateGetFormListFile(Table table, String formListsHtmlFolderPath) throws IOException {
-        System.out.println(table.getInitName());
+        System.out.println(table.getSQLName());
         String formsHtmlPath = formListsHtmlFolderPath + "/" + table.getListFileName();
         File formsListFile = new File(formsHtmlPath);
         List<Column> columns = table.getColumns();
@@ -578,8 +581,35 @@ public class GramaCodeGenerateController {
                 + "                                </thead>");
         controllerRegister_1_Importers.add("                                <tbody>");
         controllerRegister_1_Importers.add("");
-        controllerRegister_1_Importers.add("");
-        controllerRegister_1_Importers.add("");
+
+        controllerRegister_1_Importers.add("                                <?php\n"
+                + "                                $query = \"SELECT * FROM "+table.getSQLName()+" WHERE status <> \" . $_STATUS_DELETE . \";\";\n"
+                + "                                $findStatement = $pdo->prepare($query);\n"
+                + "                                $findStatement->execute();\n"
+                + "                                if ($records = $findStatement->fetchAll(PDO::FETCH_ASSOC)) {\n"
+                + "                                    $index = 1;\n"
+                + "                                    foreach ($records as $key => $value) {\n"
+                + "                                        ?>\n"
+                + "                                        <tr>\n"
+                + "                                            <td><?= $index ?></td>\n"
+                + "                                            <td><?= "+HtmlCodeGenerateController.defaultController.generateDataVariableForListTableData(table)+" ?></td>\n"
+                + "                                            <td><?= $value['application_no'] ?></td>\n"
+                + "                                            <td>\n"
+                + "                                                <span class=\"badge <?= getFormStatusColorClass($value['form_status']) ?>\"><?= getFormStatus($value['form_status']) ?></span>\n"
+                + "                                            </td>\n"
+                + "                                            <td>\n"
+                + "                                                <a onclick=\"getRecords(<?= $value['id'] ?>)\"><i\n"
+                + "                                                            class=\"fas fa-edit mx-2 text-warning\"></i></a>\n"
+                + "                                                <a href=\"../Controllers/"+table.getNameInCamelCase()+"/"+table.getDeleteControllerFileName()+"?id=<?= $value['id'] ?>\"><i\n"
+                + "                                                            class=\"fas fa-trash mx-2 text-danger\"></i></a>\n"
+                + "                                            </td>\n"
+                + "                                        </tr>\n"
+                + "                                        <?php\n"
+                + "                                        $index++;\n"
+                + "                                    }\n"
+                + "                                }\n"
+                + "                                ?>");
+
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("                                </tbody>");
         controllerRegister_1_Importers.add("                            </table>");

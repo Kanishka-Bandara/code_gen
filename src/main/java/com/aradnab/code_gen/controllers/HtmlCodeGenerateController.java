@@ -5,6 +5,7 @@
 package com.aradnab.code_gen.controllers;
 
 import com.aradnab.code_gen.models.Column;
+import com.aradnab.code_gen.models.Table;
 
 /**
  *
@@ -196,6 +197,41 @@ public class HtmlCodeGenerateController {
                 + "                    </div>";
 
         return html;
+    }
+    
+    public String generateDataVariableForListTableData(Table table){
+        String firstName = null;
+        String lastName = null;
+        String fullName = null;
+        String nic = null;
+        
+        for (Column column : table.getColumns()) {
+            if (column.getSqlName().contains("first_name")) {
+                firstName = column.getSqlName();
+            } 
+            if (column.getSqlName().contains("last_name")) {
+                lastName = column.getSqlName();
+            }
+            if (column.getSqlName().contains("full_name")) {
+                firstName = column.getSqlName();
+            }
+            if (column.getSqlName().contains("national_identity_card_number")) {
+                nic = column.getSqlName();
+            }
+        }
+        
+        if ((firstName!=null)&&(lastName!=null)) {
+            return "$value['"+firstName+"'] . ' ' . $value['"+lastName+"']";
+        }else if (fullName!=null) {
+            return "$value['"+fullName+"']";
+        }else if (nic!=null) {
+            return "$value['"+nic+"']";
+        }else if (firstName!=null) {
+            return "$value['"+firstName+"']";
+        }else if (lastName!=null) {
+            return "$value['"+lastName+"']";
+        }
+        return "";
     }
 
 }
