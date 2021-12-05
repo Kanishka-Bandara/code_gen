@@ -367,7 +367,7 @@ public class GramaCodeGenerateController {
         Vector<String> controllerRegister_1_Importers = new Vector<>();
         //END::String holders
 
-        controllerRegister_1_Importers.add("<div class=\"modal fade\" id=\"nicnewform\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"nicnewformLabel\"\n"
+        controllerRegister_1_Importers.add("<div class=\"modal fade\" id=\"newform\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"newformLabel\"\n"
                 + "     aria-hidden=\"true\">");
         controllerRegister_1_Importers.add("    <form enctype=\"multipart/form-data\" method=\"POST\" action=\"../Controllers/" + table.getNameInCamelCase() + "/" + table.getCreateControllerFileName() + "\"\n"
                 + "          onsubmit=\"generateApplicationNumber();return true;\">");
@@ -379,7 +379,7 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("            <div class=\"modal-content\">");
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("                <div class=\"modal-header\">");
-        controllerRegister_1_Importers.add("                    <h5 class=\"modal-title\" id=\"nicnewformLabel\"><strong>%Form Header%</strong></h5>");
+        controllerRegister_1_Importers.add("                    <h5 class=\"modal-title\" id=\"newformLabel\"><strong>%Form Header%</strong></h5>");
         controllerRegister_1_Importers.add("                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">");
         controllerRegister_1_Importers.add("                        <span aria-hidden=\"true\">&times;</span>");
         controllerRegister_1_Importers.add("                    </button>");
@@ -518,9 +518,98 @@ public class GramaCodeGenerateController {
 
         controllerRegister_1_Importers.add("<body id=\"page-top\">");
 
+        controllerRegister_1_Importers.add("<div id=\"wrapper\">");
+        controllerRegister_1_Importers.add("    <?php include 'dashboard-sidebar.php'; ?>");
+        controllerRegister_1_Importers.add("    <div id=\"content-wrapper\" class=\"d-flex flex-column\">");
+        controllerRegister_1_Importers.add("        <div id=\"content\">");
+        controllerRegister_1_Importers.add("            <nav class=\"navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow\">\n"
+                + "                <form class=\"form-inline\">\n"
+                + "                    <button id=\"sidebarToggleTop\" class=\"btn btn-link d-md-none rounded-circle mr-3\">\n"
+                + "                        <i class=\"fa fa-bars\"></i>\n"
+                + "                    </button>\n"
+                + "                </form>\n"
+                + "                <ul class=\"navbar-nav ml-auto\">\n"
+                + "                    <div class=\"topbar-divider d-none d-sm-block\"></div>\n"
+                + "                    <!-- Nav Item - User Information -->\n"
+                + "                    <li class=\"nav-item dropdown no-arrow\">\n"
+                + "                        <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"userDropdown\" role=\"button\"\n"
+                + "                           data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n"
+                + "                            <span class=\"mr-2 d-none d-lg-inline text-gray-600 small\"><?php print_r($_SESSION[\"auth\"]['name']) ?></span>\n"
+                + "                            <img class=\"img-profile rounded-circle\"\n"
+                + "                                 src=\"https://www.pngfind.com/pngs/m/470-4703547_icon-user-icon-hd-png-download.png\">\n"
+                + "                        </a>\n"
+                + "                        <!-- Dropdown - User Information -->\n"
+                + "                        <div class=\"dropdown-menu dropdown-menu-right shadow animated--grow-in\"\n"
+                + "                             aria-labelledby=\"userDropdown\">\n"
+                + "                            <a class=\"dropdown-item\" href=\"../Controllers/logout.php\">\n"
+                + "                                <i class=\"fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400\"></i>\n"
+                + "                                Logout\n"
+                + "                            </a>\n"
+                + "                        </div>\n"
+                + "                    </li>\n"
+                + "                </ul>\n"
+                + "            </nav>");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("            <div class=\"container-fluid\">");
+        controllerRegister_1_Importers.add("");
+        //TODO::Can change the add new butto
+        controllerRegister_1_Importers.add(""
+                + "                <div class=\"row\">\n"
+                + "                    <div class=\"col-md-12 text-right\">\n"
+                + "                        <button type=\"button\" class=\"btn btn-sm btn-primary \" data-toggle=\"modal\"\n"
+                + "                                data-target=\"#newform\">\n"
+                + "                            New Registration\n"
+                + "                        </button>\n"
+                + "                    </div>\n"
+                + "                </div>");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                <div class=\"row mt-3\">");
+        controllerRegister_1_Importers.add("                    <div class=\"col-md-12\">");
+        controllerRegister_1_Importers.add("                        <div class=\"table-responsive\">");
+        controllerRegister_1_Importers.add("                            <table class=\"table table-light\">");
+        controllerRegister_1_Importers.add("                                <thead>\n"
+                + "                                <tr>\n"
+                + "                                    <th>No #</th>\n"
+                + "                                    <th>Person Name</th>\n"
+                + "                                    <th>Application Number</th>\n"
+                + "                                    <th>Status</th>\n"
+                + "                                    <th>Actions</th>\n"
+                + "                                </tr>\n"
+                + "                                </thead>");
+        controllerRegister_1_Importers.add("                                <tbody>");
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                                </tbody>");
+        controllerRegister_1_Importers.add("                            </table>");
+        controllerRegister_1_Importers.add("                        </div>");
+        controllerRegister_1_Importers.add("                    </div>");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                </div>");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("            </div>");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("        </div>");
+        controllerRegister_1_Importers.add("        <?php include 'dashboard-footer.php'; ?>");
+        controllerRegister_1_Importers.add("    </div>");
+        controllerRegister_1_Importers.add("</div>");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("<a class=\"scroll-to-top rounded\" href=\"#page-top\">\n"
+                + "    <i class=\"fas fa-angle-up\"></i>\n"
+                + "</a>\n"
+                + "\n"
+                + "<?php include 'forms/" + table.getFormFileName() + "'; ?>");
+        controllerRegister_1_Importers.add("");
+
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("<script src=\"assets/vendor/jquery/jquery.min.js\"></script>\n"
+                + "<script src=\"assets/vendor/bootstrap/js/bootstrap.bundle.min.js\"></script>\n"
+                + "<script src=\"assets/vendor/jquery-easing/jquery.easing.min.js\"></script>\n"
+                + "<script src=\"assets/js/sb-admin-2.min.js\"></script>\n"
+                + "<script src=\"assets/vendor/datatables/jquery.dataTables.min.js\"></script>\n"
+                + "<script src=\"assets/vendor/datatables/dataTables.bootstrap4.min.js\"></script>\n"
+                + "<script src=\"assets/js/demo/datatables-demo.js\"></script>");
         controllerRegister_1_Importers.add("");
 
         controllerRegister_1_Importers.add("<script>");
@@ -564,19 +653,66 @@ public class GramaCodeGenerateController {
 
             } else {
                 if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
-                    s02.add(HtmlCodeGenerateController.defaultController.generateHtmlField(column));
+                    s02.add(JSCOdeGenerateController.defaultController.generateJSVariableForSetters(column));
                 } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
-                    s03.add(HtmlCodeGenerateController.defaultController.generateHtmlField(column));
+                    s03.add(JSCOdeGenerateController.defaultController.generateJSVariableForSetters(column));
                 } else {
-                    s01.add(HtmlCodeGenerateController.defaultController.generateHtmlField(column));
+                    s01.add(JSCOdeGenerateController.defaultController.generateJSVariableForSetters(column));
                 }
             }
         }
 
         controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                //BEGIN::Citizen Section");
+        controllerRegister_1_Importers.add("");
+        for (String s : s01) {
+            controllerRegister_1_Importers.add(s);
+        }
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                //END::Citizen Section");
         controllerRegister_1_Importers.add("");
 
-        controllerRegister_1_Importers.add("                $('#nicnewform').modal('show');");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add(" <?php\n"
+                + "                if ($_SESSION[\"auth\"]['type'] == 3 || $_SESSION[\"auth\"]['type'] == 2 || $_SESSION[\"auth\"]['type'] == 1) {\n"
+                + "                ?>");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                //BEGIN::GS Section");
+        controllerRegister_1_Importers.add("");
+        for (String s : s02) {
+            controllerRegister_1_Importers.add(s);
+        }
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                //END::GS Section");
+        controllerRegister_1_Importers.add("                <?php\n"
+                + "                }\n"
+                + "                ?>");
+        controllerRegister_1_Importers.add("");
+
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                <?php\n"
+                + "                if ($_SESSION[\"auth\"]['type'] == 2 || $_SESSION[\"auth\"]['type'] == 1) {\n"
+                + "                ?>");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                //BEGIN::DS Section");
+        controllerRegister_1_Importers.add("");
+        for (String s : s03) {
+            controllerRegister_1_Importers.add(s);
+        }
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                //END::DS Section");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                <?php\n"
+                + "                }\n"
+                + "                ?>");
+        controllerRegister_1_Importers.add("");
+
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
+
+        controllerRegister_1_Importers.add("                $('#newform').modal('show');");
         controllerRegister_1_Importers.add("            }\n"
                 + "        });\n"
                 + "    }");

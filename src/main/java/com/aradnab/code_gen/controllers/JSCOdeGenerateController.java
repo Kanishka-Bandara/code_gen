@@ -12,7 +12,7 @@ import com.aradnab.code_gen.models.Column;
  */
 public class JSCOdeGenerateController {
 
-    public static JSCOdeGenerateController controller = new JSCOdeGenerateController();
+    public static JSCOdeGenerateController defaultController = new JSCOdeGenerateController();
 
     public String generateJSVariableForSetters(Column c) {
         String js = "$('#" + c.getColumnJsLabelId() + "').val(data." + c.getSqlName() + ");";
