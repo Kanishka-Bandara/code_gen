@@ -93,7 +93,8 @@ public class HtmlCodeGenerateController {
                     + "                        </div>\n"
                     + "                    </div>";
         } else if (c.getSqlName().toLowerCase().contains("district")) {
-            return "                        <div class=\"form-group row\" id = \"" + c.getColumnJsSectionId() + "\">\n"
+            return "<div class=\"col-md-12 mt-3\" id = \"" + c.getColumnJsSectionId() + "\">\n"
+                    + "                        <div class=\"form-group row\">\n"
                     + "                            <label class=\"col-md-4 col-form-label\">" + c.getColumnHtmlNameToDisplay() + "</label>\n"
                     + "                            <div class=\"col-md-4\">\n"
                     + "                                <select required class=\"form-control\" name=\"" + c.getColumnJsName() + "\" id=\"" + c.getColumnJsId() + "\">\n"
@@ -107,7 +108,8 @@ public class HtmlCodeGenerateController {
                     + "                                    ?>\n"
                     + "                                </select>\n"
                     + "                            </div>\n"
-                    + "                        </div>";
+                    + "                        </div>"
+                    + "                    </div>";
         } else if (c.getSqlName().toLowerCase().contains("gn_division")) {
             return "                        <div class=\"col-md-12\" id = \"" + c.getColumnJsSectionId() + "\">\n"
                     + "                            <label><small>G.N Number & G.N Division</small></label>\n"
@@ -151,7 +153,7 @@ public class HtmlCodeGenerateController {
             html += "                                <input required id=\"" + c.getColumnJsId() + "\" name=\"" + c.getColumnJsName() + "\" type=\"email\" class=\"form-control\">";
         } else if (c.getColumnHtmlFieldType().equals("img")) {
             html += "                                    <label for=\"" + c.getColumnJsId() + "\" id=\"label_signature\" class=\"btn btn-primary w-100\">Upload Image</label>";
-            html += "                                    <input id=\"" + c.getColumnJsId() + "\" name=\"" + c.getColumnJsName() + "\" class=\"d-none\" type=\"file\" onchange='setImage(this,\"citizen_signature_image\")'>";
+            html += "                                    <input id=\"" + c.getColumnJsId() + "\" name=\"" + c.getColumnJsName() + "\" class=\"d-none\" type=\"file\" onchange='setImage(this,\"" + c.getColumnJsImageSrcPreviewId() + "\")'>";
         } else if (c.getColumnHtmlFieldType().equals("drp")) {
 
         } else if (c.getColumnHtmlFieldType().equals("cb")) {
@@ -173,7 +175,7 @@ public class HtmlCodeGenerateController {
                 + "                    </div>";
 
         if (c.getColumnHtmlFieldType().equals("img")) {
-            html += "<div class=\"col-md-12\" id=\"" + c.getColumnJsImagePreviewSectionId() + "\">\n"
+            html += "<div class=\"col-md-12 mb-3\" id=\"" + c.getColumnJsImagePreviewSectionId() + "\">\n"
                     + "                        <label for=\"citizen_signature_image\">Attached " + (c.getSqlName().toLowerCase().contains("signature") ? "Signature" : "Image") + "</label>\n"
                     + "                        <br>\n"
                     + "                        <img id=\"" + c.getColumnJsImageSrcPreviewId() + "\" name=\"" + c.getColumnJsImageSrcPreviewName() + "\" src=\"/grama/Views/assets/img/sign_here.jpg\" alt=\"...\" class=\"img-thumbnail\" style=\"height: 200px;width: auto\">\n"
