@@ -159,7 +159,7 @@ public class GramaCodeGenerateController {
             } else if (column.getSqlName().equals("id")) {
 
             } else if (column.getSqlName().equals("application_no")) {
-
+                controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = $_POST['" + column.getColumnNameInCamelCase() + "'];");
             } else {
                 if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
                     controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = null;");
@@ -169,7 +169,7 @@ public class GramaCodeGenerateController {
                     controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_DS) {");
                 }
                 if (column.getColumnHtmlFieldType().equals("img")) {
-                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = $_POST['" + column.getColumnNameInCamelCase() + "'];");
+                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = $_FILES['" + column.getColumnNameInCamelCase() + "'];");
                     controllerRegister_1_Importers.add("if (isset(" + column.getColumnNameAsPHPVariable() + ")) {");
                     controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = ImageHelper::saveImage(" + column.getColumnNameAsPHPVariable() + ");");
                     controllerRegister_1_Importers.add("}");
@@ -238,10 +238,12 @@ public class GramaCodeGenerateController {
                 controllerRegister_1_Importers.add("}");
             } else {
                 if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
-                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = null;");
+                controllerRegister_1_Importers.add("$processData['" + column.getSqlName() + "'] = null;");
+//                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = null;");
                     controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_GS) {");
                 } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
-                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = null;");
+                controllerRegister_1_Importers.add("$processData['" + column.getSqlName() + "'] = null;");
+//                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = null;");
                     controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_DS) {");
                 }
 
@@ -439,7 +441,9 @@ public class GramaCodeGenerateController {
         }
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("                        <!--                    END::Applicant Section-->");
-        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add(" <?php\n"
+                + "                    if ($_SESSION[\"auth\"]['type'] == 3 || $_SESSION[\"auth\"]['type'] == 2 || $_SESSION[\"auth\"]['type'] == 1) {\n"
+                + "                        ?>");
         controllerRegister_1_Importers.add("                        <!--                    BEGIN::Grama Niladari Section-->");
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add(HtmlCodeGenerateController.defaultController.getSection02ForGS());
@@ -448,7 +452,12 @@ public class GramaCodeGenerateController {
         }
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("                        <!--                    END::Grama Niladari Section-->");
-        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add(" <?PHP\n"
+                + "                    }\n"
+                + "                    ?>\n"
+                + "                    <?php\n"
+                + "                    if ($_SESSION[\"auth\"]['type'] == 2 || $_SESSION[\"auth\"]['type'] == 1) {\n"
+                + "                        ?>");
         controllerRegister_1_Importers.add("                        <!--                    BEGIN::Divisional secretariat Section-->");
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add(HtmlCodeGenerateController.defaultController.getSection03ForDS());
@@ -457,7 +466,9 @@ public class GramaCodeGenerateController {
         }
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("                        <!--                    END::Divisional secretariat Section-->");
-        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                        <?PHP\n"
+                + "                    }\n"
+                + "                    ?>");
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("                </div>");//End Model body
 
@@ -583,7 +594,7 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("");
 
         controllerRegister_1_Importers.add("                                <?php\n"
-                + "                                $query = \"SELECT * FROM "+table.getSQLName()+" WHERE status <> \" . $_STATUS_DELETE . \";\";\n"
+                + "                                $query = \"SELECT * FROM " + table.getSQLName() + " WHERE status <> \" . $_STATUS_DELETE . \";\";\n"
                 + "                                $findStatement = $pdo->prepare($query);\n"
                 + "                                $findStatement->execute();\n"
                 + "                                if ($records = $findStatement->fetchAll(PDO::FETCH_ASSOC)) {\n"
@@ -592,7 +603,7 @@ public class GramaCodeGenerateController {
                 + "                                        ?>\n"
                 + "                                        <tr>\n"
                 + "                                            <td><?= $index ?></td>\n"
-                + "                                            <td><?= "+HtmlCodeGenerateController.defaultController.generateDataVariableForListTableData(table)+" ?></td>\n"
+                + "                                            <td><?= " + HtmlCodeGenerateController.defaultController.generateDataVariableForListTableData(table) + " ?></td>\n"
                 + "                                            <td><?= $value['application_no'] ?></td>\n"
                 + "                                            <td>\n"
                 + "                                                <span class=\"badge <?= getFormStatusColorClass($value['form_status']) ?>\"><?= getFormStatus($value['form_status']) ?></span>\n"
@@ -600,7 +611,7 @@ public class GramaCodeGenerateController {
                 + "                                            <td>\n"
                 + "                                                <a onclick=\"getRecords(<?= $value['id'] ?>)\"><i\n"
                 + "                                                            class=\"fas fa-edit mx-2 text-warning\"></i></a>\n"
-                + "                                                <a href=\"../Controllers/"+table.getNameInCamelCase()+"/"+table.getDeleteControllerFileName()+"?id=<?= $value['id'] ?>\"><i\n"
+                + "                                                <a href=\"../Controllers/" + table.getNameInCamelCase() + "/" + table.getDeleteControllerFileName() + "?id=<?= $value['id'] ?>\"><i\n"
                 + "                                                            class=\"fas fa-trash mx-2 text-danger\"></i></a>\n"
                 + "                                            </td>\n"
                 + "                                        </tr>\n"
@@ -658,7 +669,7 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("    function getRecords(id) {\n"
                 + "        $.ajax({\n"
                 + "            type: \"GET\",\n"
-                + "            url: \"../Controllers/NIC/getNIC.php?id=\" + id,\n"
+                + "            url: \"../Controllers/"+table.getNameInCamelCase()+"/"+table.getGetFormControllerFileName()+"?id=\" + id,\n"
                 + "            success: function (response) {\n"
                 + "                var data = JSON.parse(response);");
 
@@ -678,7 +689,7 @@ public class GramaCodeGenerateController {
             } else if (column.getSqlName().equals("form_status")) {
 
             } else if (column.getSqlName().equals("application_no")) {
-
+                    s01.add("$('#applicationNo').val(data." + column.getSqlName() + ");");
             } else if (column.getSqlName().equals("id")) {
 
             } else {
