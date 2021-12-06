@@ -694,11 +694,11 @@ public class GramaCodeGenerateController {
 
             } else {
                 if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
-                    s02.add(JSCOdeGenerateController.defaultController.generateJSVariableForSetters(column));
+                    s02.add(JSCodeGenerateController.defaultController.generateJSVariableForSetters(column));
                 } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
-                    s03.add(JSCOdeGenerateController.defaultController.generateJSVariableForSetters(column));
+                    s03.add(JSCodeGenerateController.defaultController.generateJSVariableForSetters(column));
                 } else {
-                    s01.add(JSCOdeGenerateController.defaultController.generateJSVariableForSetters(column));
+                    s01.add(JSCodeGenerateController.defaultController.generateJSVariableForSetters(column));
                 }
             }
         }
