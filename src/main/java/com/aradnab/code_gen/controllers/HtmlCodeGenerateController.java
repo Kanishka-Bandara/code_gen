@@ -176,7 +176,7 @@ public class HtmlCodeGenerateController {
 
         if (c.getColumnHtmlFieldType().equals("img")) {
             html += "<div class=\"col-md-12 mb-3\" id=\"" + c.getColumnJsImagePreviewSectionId() + "\">\n"
-                    + "                        <label for=\"citizen_signature_image\">Attached " + (c.getSqlName().toLowerCase().contains("signature") ? "Signature" : "Image") + "</label>\n"
+                    + "                        <label for=\"" + c.getColumnJsImageSrcPreviewId() + "\">Attached " + (c.getSqlName().toLowerCase().contains("signature") ? "Signature" : "Image") + "</label>\n"
                     + "                        <br>\n"
                     + "                        <img id=\"" + c.getColumnJsImageSrcPreviewId() + "\" name=\"" + c.getColumnJsImageSrcPreviewName() + "\" src=\"/grama/Views/assets/img/sign_here.jpg\" alt=\"...\" class=\"img-thumbnail\" style=\"height: 200px;width: auto\">\n"
                     + "                    </div>";
