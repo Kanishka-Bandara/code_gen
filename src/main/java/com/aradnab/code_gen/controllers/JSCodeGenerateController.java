@@ -40,7 +40,11 @@ public class JSCodeGenerateController {
         String js = "";
         switch (c.getColumnHtmlFieldType()) {
             case "img":
+                if (c.getSqlName().toLowerCase().trim().contains("signature")) {
                 js = "                    $(\"#" + c.getColumnJsImageSrcPreviewId() + "\").attr(\"src\", '/grama/Views/assets/img/sign_here.jpg');";
+                } else {
+                js = "                    $(\"#" + c.getColumnJsImageSrcPreviewId() + "\").attr(\"src\", '/grama/Views/assets/img/placeholder-image.png');";
+                }
                 break;
             case "cb":
                 break;
