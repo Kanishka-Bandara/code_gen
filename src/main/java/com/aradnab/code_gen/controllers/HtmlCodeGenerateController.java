@@ -180,13 +180,27 @@ public class HtmlCodeGenerateController {
                     + "                                ?>\n"
                     + "                            </select>\n"
                     + "                        </div>";
-        } else if (c.getSqlName().toLowerCase().contains("drp_living_details")) {
+        } else if (c.getSqlName().toLowerCase().contains("drp_married_status")) {
             return "                        <div class=\"col-md-12\" id = \"" + c.getColumnJsSectionId() + "\">\n"
                     + "                            <label><small><strong>5. Married Status</strong></small></label>\n"
                     + "                            <select required class=\"form-control\" name=\"" + c.getColumnJsName() + "\" id=\"" + c.getColumnJsId() + "\">\n"
                     + "                                <option selected disabled value=\"\">-Select-</option>\n"
                     + "                                <?php\n"
                     + "                                foreach (getMarriedStatus() as $keyDD => $valueDD) {\n"
+                    + "                                    ?>\n"
+                    + "                                    <option value=\"<?= $keyDD ?>\"><?= $valueDD ?></option>\n"
+                    + "                                    <?php\n"
+                    + "                                }\n"
+                    + "                                ?>\n"
+                    + "                            </select>\n"
+                    + "                        </div>";
+        } else if (c.getSqlName().toLowerCase().contains("drp_another_subsidies")) {
+            return "                        <div class=\"col-md-12\" id = \"" + c.getColumnJsSectionId() + "\">\n"
+                    + "                            <label><small><strong>5. Another Subsidies</strong></small></label>\n"
+                    + "                            <select required class=\"form-control\" name=\"" + c.getColumnJsName() + "\" id=\"" + c.getColumnJsId() + "\">\n"
+                    + "                                <option selected disabled value=\"\">-Select-</option>\n"
+                    + "                                <?php\n"
+                    + "                                foreach (getAnotherSubsidies() as $keyDD => $valueDD) {\n"
                     + "                                    ?>\n"
                     + "                                    <option value=\"<?= $keyDD ?>\"><?= $valueDD ?></option>\n"
                     + "                                    <?php\n"
