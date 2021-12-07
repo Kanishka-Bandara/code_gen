@@ -48,6 +48,7 @@ public class GramaCodeGenerateController {
         createFolder(controllersFolder, "Controllers");
 
         List<Table> tables = database.getTables();
+        Vector<Table> sideBarList = new Vector<>();
 //      Looping tables
         for (Table table : tables) {
             if (!(table.getSQLName().equals("formnic") || table.getSQLName().equals("users"))) {
@@ -57,8 +58,10 @@ public class GramaCodeGenerateController {
                 this.generateGetFormDetailsControllerFile(table, controllerFolderPath);
                 this.generateFormFile(table, formsHtmlFolderPath);
                 this.generateGetFormListFile(table, formListsHtmlFolderPath);
+                sideBarList.add(table);
             }
         }
+        this.generateDashboardSidebarFile(sideBarList, formListsHtmlFolderPath);
     }
 
     public void createFolder(File folder, String name) {
@@ -238,11 +241,11 @@ public class GramaCodeGenerateController {
                 controllerRegister_1_Importers.add("}");
             } else {
                 if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
-                controllerRegister_1_Importers.add("$processData['" + column.getSqlName() + "'] = null;");
+                    controllerRegister_1_Importers.add("$processData['" + column.getSqlName() + "'] = null;");
 //                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = null;");
                     controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_GS) {");
                 } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
-                controllerRegister_1_Importers.add("$processData['" + column.getSqlName() + "'] = null;");
+                    controllerRegister_1_Importers.add("$processData['" + column.getSqlName() + "'] = null;");
 //                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = null;");
                     controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_DS) {");
                 }
@@ -384,7 +387,7 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("            <div class=\"modal-content\">");
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("                <div class=\"modal-header\">");
-        controllerRegister_1_Importers.add("                    <h5 class=\"modal-title\" id=\"newformLabel\"><strong>"+table.getTableNameToDisplay()+"</strong></h5>");
+        controllerRegister_1_Importers.add("                    <h5 class=\"modal-title\" id=\"newformLabel\"><strong>" + table.getTableNameToDisplay() + "</strong></h5>");
         controllerRegister_1_Importers.add("                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">");
         controllerRegister_1_Importers.add("                        <span aria-hidden=\"true\">&times;</span>");
         controllerRegister_1_Importers.add("                    </button>");
@@ -669,7 +672,7 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("    function getRecords(id) {\n"
                 + "        $.ajax({\n"
                 + "            type: \"GET\",\n"
-                + "            url: \"../Controllers/"+table.getNameInCamelCase()+"/"+table.getGetFormControllerFileName()+"?id=\" + id,\n"
+                + "            url: \"../Controllers/" + table.getNameInCamelCase() + "/" + table.getGetFormControllerFileName() + "?id=\" + id,\n"
                 + "            success: function (response) {\n"
                 + "                var data = JSON.parse(response);");
 
@@ -689,7 +692,7 @@ public class GramaCodeGenerateController {
             } else if (column.getSqlName().equals("form_status")) {
 
             } else if (column.getSqlName().equals("application_no")) {
-                    s01.add("$('#applicationNo').val(data." + column.getSqlName() + ");");
+                s01.add("$('#applicationNo').val(data." + column.getSqlName() + ");");
             } else if (column.getSqlName().equals("id")) {
 
             } else {
@@ -762,7 +765,7 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("    function clearForm() {");
         controllerRegister_1_Importers.add("        generateApplicationNumber();");
         controllerRegister_1_Importers.add("");
-        
+
         s01 = new Vector<String>();
         s02 = new Vector<String>();
         s03 = new Vector<String>();
@@ -776,7 +779,7 @@ public class GramaCodeGenerateController {
             } else if (column.getSqlName().equals("form_status")) {
 
             } else if (column.getSqlName().equals("application_no")) {
-                
+
             } else if (column.getSqlName().equals("id")) {
 
             } else {
@@ -789,7 +792,7 @@ public class GramaCodeGenerateController {
                 }
             }
         }
-        
+
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("                //BEGIN::Citizen Section");
         controllerRegister_1_Importers.add("");
@@ -835,11 +838,10 @@ public class GramaCodeGenerateController {
                 + "                ?>");
         controllerRegister_1_Importers.add("");
 
-        
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("    }");
         controllerRegister_1_Importers.add("");
-        
+
         controllerRegister_1_Importers.add("</script>");
 
         controllerRegister_1_Importers.add("</body>");
@@ -848,6 +850,53 @@ public class GramaCodeGenerateController {
 
         //BEGIN::Writing
         this.createFile(formsListFile, table.getListFileName());
+        this.writeToFile(formsListFile, controllerRegister_1_Importers);
+        //END::Writing
+    }
+
+    public void generateDashboardSidebarFile(Vector<Table> tables, String formListsHtmlFolderPath) throws IOException {
+        String formsHtmlPath = formListsHtmlFolderPath + "/dashboard-sidebar_1.php";
+        System.out.println(formsHtmlPath);
+        File formsListFile = new File(formsHtmlPath);
+        Vector<String> controllerRegister_1_Importers = new Vector<>();
+        controllerRegister_1_Importers.add("<ul class=\"navbar-nav bg-gradient-primary sidebar sidebar-dark accordion\" id=\"accordionSidebar\">\n"
+                + "    <a class=\"sidebar-brand d-flex align-items-center justify-content-center\" href=\"index.html\">\n"
+                + "\n"
+                + "        <div class=\"sidebar-brand-text mx-3\">Welcome</div>\n"
+                + "    </a>\n"
+                + "    <hr class=\"sidebar-divider my-0\">\n"
+                + "    <li class=\"nav-item\">\n"
+                + "        <a class=\"nav-link\" href=\"dashboard.php\">\n"
+                + "            <i class=\"fas fa-fw fa-tachometer-alt\"></i>\n"
+                + "            <span>Dashboard</span></a>\n"
+                + "    </li>\n"
+                + "    <hr class=\"sidebar-divider\">\n"
+                + "    <div class=\"sidebar-heading\">\n"
+                + "        Pages\n"
+                + "    </div>");
+        controllerRegister_1_Importers.add("    <li class=\"nav-item\">\n"
+                + "        <a class=\"nav-link collapsed\" href=\"nic-form-list.php\">\n"
+                + "            <i class=\"fa fa-file-text-o\"></i>\n"
+                + "            <span>NIC</span>\n"
+                + "        </a>\n"
+                + "    </li>");
+
+        for (Table table : tables) {
+            controllerRegister_1_Importers.add("    <li class=\"nav-item\">\n"
+                    + "        <a class=\"nav-link collapsed\" href=\""+table.getListFileName()+"\">\n"
+                    + "            <i class=\"fa fa-file-text-o\"></i>\n"
+                    + "            <span>"+table.getTableNameToDisplay()+"</span>\n"
+                    + "        </a>\n"
+                    + "    </li>");
+        }
+        controllerRegister_1_Importers.add("    <hr class=\"sidebar-divider d-none d-md-block\">\n"
+                + "    <div class=\"text-center d-none d-md-inline\">\n"
+                + "        <button class=\"rounded-circle border-0\" id=\"sidebarToggle\"></button>\n"
+                + "    </div>\n"
+                + "\n"
+                + "</ul>");
+        //BEGIN::Writing
+        this.createFile(formsListFile, "dashboard-sidebar_1.php");
         this.writeToFile(formsListFile, controllerRegister_1_Importers);
         //END::Writing
     }

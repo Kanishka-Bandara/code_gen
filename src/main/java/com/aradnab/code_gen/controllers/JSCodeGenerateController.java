@@ -20,8 +20,8 @@ public class JSCodeGenerateController {
         switch (c.getColumnHtmlFieldType()) {
             case "img":
                 js = "                let " + c.getColumnJsName() + " = imageFolderPath+data." + c.getSqlName() + ";\n"
-                        + "                if (!$.trim(" + c.getColumnJsName() + ")){\n"
-                        + "                    $(\"#" + c.getColumnJsImageSrcPreviewId() + "\").attr(\"src\", imageFolderPath+data." + c.getSqlName() + ");\n"
+                        + "                if ($.trim(data." + c.getSqlName() + ")){\n"
+                        + "                    $(\"#" + c.getColumnJsImageSrcPreviewId() + "\").attr(\"src\", " + c.getColumnJsName() + ");\n"
                         + "                }";
                 break;
             case "cb":
