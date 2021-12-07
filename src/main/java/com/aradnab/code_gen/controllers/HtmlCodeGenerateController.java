@@ -236,6 +236,20 @@ public class HtmlCodeGenerateController {
                     + "                                ?>\n"
                     + "                            </select>\n"
                     + "                        </div>";
+        } else if (c.getSqlName().toLowerCase().contains("drp_reason_for_need_the_land")) {
+            return "                        <div class=\"col-md-12\" id = \"" + c.getColumnJsSectionId() + "\">\n"
+                    + "                            <label><small>Reason For Need The Land</small></label>\n"
+                    + "                            <select required class=\"form-control\" name=\"" + c.getColumnJsName() + "\" id=\"" + c.getColumnJsId() + "\">\n"
+                    + "                                <option selected disabled value=\"\">-Select-</option>\n"
+                    + "                                <?php\n"
+                    + "                                foreach (getReasonsForNeedTheLand() as $keyDD => $valueDD) {\n"
+                    + "                                    ?>\n"
+                    + "                                    <option value=\"<?= $keyDD ?>\"><?= $valueDD ?></option>\n"
+                    + "                                    <?php\n"
+                    + "                                }\n"
+                    + "                                ?>\n"
+                    + "                            </select>\n"
+                    + "                        </div>";
         }
 
         String html = "                    <div class=\"col-md-12\" id = \"" + c.getColumnJsSectionId() + "\">\n"
