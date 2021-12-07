@@ -152,13 +152,27 @@ public class HtmlCodeGenerateController {
                     + "                                ?>\n"
                     + "                            </select>\n"
                     + "                        </div>";
-        } else if (c.getSqlName().toLowerCase().contains("s1_n1_drp_purpose_of_second_copy_of_identity_card")) {
+        } else if (c.getSqlName().toLowerCase().contains("drp_purpose_of_second_copy_of_identity_card")) {
             return "                        <div class=\"col-md-12\" id = \"" + c.getColumnJsSectionId() + "\">\n"
                     + "                            <label><small><strong>1. Purpose Of Second Copy Of Identity Card</strong></small></label>\n"
                     + "                            <select required class=\"form-control\" name=\"" + c.getColumnJsName() + "\" id=\"" + c.getColumnJsId() + "\">\n"
                     + "                                <option selected disabled value=\"\">-Select-</option>\n"
                     + "                                <?php\n"
                     + "                                foreach (getPurposesOfSecondCopyOfIdentityCard() as $keyDD => $valueDD) {\n"
+                    + "                                    ?>\n"
+                    + "                                    <option value=\"<?= $keyDD ?>\"><?= $valueDD ?></option>\n"
+                    + "                                    <?php\n"
+                    + "                                }\n"
+                    + "                                ?>\n"
+                    + "                            </select>\n"
+                    + "                        </div>";
+        } else if (c.getSqlName().toLowerCase().contains("drp_living_details")) {
+            return "                        <div class=\"col-md-12\" id = \"" + c.getColumnJsSectionId() + "\">\n"
+                    + "                            <label><small><strong>1. Purpose Of Second Copy Of Identity Card</strong></small></label>\n"
+                    + "                            <select required class=\"form-control\" name=\"" + c.getColumnJsName() + "\" id=\"" + c.getColumnJsId() + "\">\n"
+                    + "                                <option selected disabled value=\"\">-Select-</option>\n"
+                    + "                                <?php\n"
+                    + "                                foreach (getLivingDetails() as $keyDD => $valueDD) {\n"
                     + "                                    ?>\n"
                     + "                                    <option value=\"<?= $keyDD ?>\"><?= $valueDD ?></option>\n"
                     + "                                    <?php\n"
