@@ -124,6 +124,20 @@ public class HtmlCodeGenerateController {
                     + "                                ?>\n"
                     + "                            </select>\n"
                     + "                        </div>";
+        } else if (c.getSqlName().toLowerCase().contains("election_division")) {
+            return "                        <div class=\"col-md-12\" id = \"" + c.getColumnJsSectionId() + "\">\n"
+                    + "                            <label><small>Election Division</small></label>\n"
+                    + "                            <select required class=\"form-control\" name=\"" + c.getColumnJsName() + "\" id=\"" + c.getColumnJsId() + "\">\n"
+                    + "                                <option selected disabled value=\"\">-Select-</option>\n"
+                    + "                                <?php\n"
+                    + "                                foreach (getElectionDivisions() as $keyGD => $valueGD1) {\n"
+                    + "                                    ?>\n"
+                    + "                                    <option value=\"<?= $keyGD ?>\"><?= $valueGD1[0] ?> - <?= $valueGD1[1] ?></option>\n"
+                    + "                                    <?php\n"
+                    + "                                }\n"
+                    + "                                ?>\n"
+                    + "                            </select>\n"
+                    + "                        </div>";
         } else if (c.getSqlName().toLowerCase().contains("ds_division")) {
             return "                        <div class=\"col-md-12\" id = \"" + c.getColumnJsSectionId() + "\">\n"
                     + "                            <label><small>D.S. Division</small></label>\n"

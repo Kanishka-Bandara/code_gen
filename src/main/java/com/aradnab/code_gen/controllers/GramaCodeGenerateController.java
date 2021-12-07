@@ -384,7 +384,7 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("            <div class=\"modal-content\">");
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("                <div class=\"modal-header\">");
-        controllerRegister_1_Importers.add("                    <h5 class=\"modal-title\" id=\"newformLabel\"><strong>%Form Header%</strong></h5>");
+        controllerRegister_1_Importers.add("                    <h5 class=\"modal-title\" id=\"newformLabel\"><strong>"+table.getTableNameToDisplay()+"</strong></h5>");
         controllerRegister_1_Importers.add("                    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">");
         controllerRegister_1_Importers.add("                        <span aria-hidden=\"true\">&times;</span>");
         controllerRegister_1_Importers.add("                    </button>");
