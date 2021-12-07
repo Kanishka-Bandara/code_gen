@@ -168,11 +168,25 @@ public class HtmlCodeGenerateController {
                     + "                        </div>";
         } else if (c.getSqlName().toLowerCase().contains("drp_living_details")) {
             return "                        <div class=\"col-md-12\" id = \"" + c.getColumnJsSectionId() + "\">\n"
-                    + "                            <label><small><strong>1. Purpose Of Second Copy Of Identity Card</strong></small></label>\n"
+                    + "                            <label><small><strong>10. Living Details/strong></small></label>\n"
                     + "                            <select required class=\"form-control\" name=\"" + c.getColumnJsName() + "\" id=\"" + c.getColumnJsId() + "\">\n"
                     + "                                <option selected disabled value=\"\">-Select-</option>\n"
                     + "                                <?php\n"
                     + "                                foreach (getLivingDetails() as $keyDD => $valueDD) {\n"
+                    + "                                    ?>\n"
+                    + "                                    <option value=\"<?= $keyDD ?>\"><?= $valueDD ?></option>\n"
+                    + "                                    <?php\n"
+                    + "                                }\n"
+                    + "                                ?>\n"
+                    + "                            </select>\n"
+                    + "                        </div>";
+        } else if (c.getSqlName().toLowerCase().contains("drp_living_details")) {
+            return "                        <div class=\"col-md-12\" id = \"" + c.getColumnJsSectionId() + "\">\n"
+                    + "                            <label><small><strong>5. Married Status</strong></small></label>\n"
+                    + "                            <select required class=\"form-control\" name=\"" + c.getColumnJsName() + "\" id=\"" + c.getColumnJsId() + "\">\n"
+                    + "                                <option selected disabled value=\"\">-Select-</option>\n"
+                    + "                                <?php\n"
+                    + "                                foreach (getMarriedStatus() as $keyDD => $valueDD) {\n"
                     + "                                    ?>\n"
                     + "                                    <option value=\"<?= $keyDD ?>\"><?= $valueDD ?></option>\n"
                     + "                                    <?php\n"
