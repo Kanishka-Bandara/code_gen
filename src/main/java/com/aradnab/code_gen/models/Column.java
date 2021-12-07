@@ -109,6 +109,7 @@ public class Column {
     }
     
     public int getColumnHtmlNumber(){
+        System.out.println(this.getSqlName());
         return Integer.parseInt(this.sqlName.split("_")[1].replaceAll("n", "").trim());
     }
     

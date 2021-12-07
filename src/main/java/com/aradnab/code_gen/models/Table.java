@@ -13,7 +13,7 @@ import java.util.List;
  * @author kanishka
  */
 public class Table {
-    
+
     private String initName;
     private List<Column> columns = new ArrayList<>();
 
@@ -25,7 +25,7 @@ public class Table {
         this();
         this.initName = initName;
     }
-    
+
     public Table(String initName, List<Column> columns) {
         this(initName);
         this.columns = columns;
@@ -46,8 +46,8 @@ public class Table {
     public void setInitName(String initName) {
         this.initName = initName;
     }
-    
-    public void addColumn(Column column){
+
+    public void addColumn(Column column) {
         this.columns.add(column);
     }
 
@@ -55,74 +55,75 @@ public class Table {
     public String toString() {
         return "Table{" + "initName=" + initName + ", columns=" + columns + '}';
     }
-    
-    public String getCreateStatement(){
-        String query = "INSERT INTO `"+this.initName+"` (";
+
+    public String getCreateStatement() {
+        String query = "INSERT INTO `" + this.initName + "` (";
         String queryFields = "";
         for (Column column : columns) {
             if (!column.getSqlName().equals("id")) {
-                query+=column.getSqlName()+", ";
-                queryFields+="";
+                query += column.getSqlName() + ", ";
+                queryFields += "";
             }
         }
         //Remove last ,
         query = query.trim();
-        query = query.substring(0, query.length()-1);
-        query+=") VALUES (";
+        query = query.substring(0, query.length() - 1);
+        query += ") VALUES (";
         for (Column column : columns) {
             if (!column.getSqlName().equals("id")) {
-                query+=":"+column.getSqlName()+", ";
+                query += ":" + column.getSqlName() + ", ";
             }
         }
         //Remove last ,
         query = query.trim();
-        query = query.substring(0, query.length()-1);
-        query+=");";
+        query = query.substring(0, query.length() - 1);
+        query += ");";
         return query;
     }
-     public String getUpdateStatement(){
-        String query = "UPDATE `"+this.initName+"` SET ";
+
+    public String getUpdateStatement() {
+        String query = "UPDATE `" + this.initName + "` SET ";
         for (Column column : columns) {
             if (!(column.getSqlName().equals("id") || column.getSqlName().equals("created_at"))) {
-                query+="`"+column.getSqlName()+"` = :"+column.getSqlName()+",";
+                query += "`" + column.getSqlName() + "` = :" + column.getSqlName() + ",";
             }
         }
         //Remove last ,
         query = query.trim();
-        query = query.substring(0, query.length()-1);
-        query+=" WHERE `id` = :id;";
+        query = query.substring(0, query.length() - 1);
+        query += " WHERE `id` = :id;";
         return query;
     }
-    
-    public String getNameInCamelCase(){
+
+    public String getNameInCamelCase() {
         return Helper.defaultHelper.snakeCaseToCamelCase(this.initName);
     }
-    
-    public String getCreateControllerFileName(){
-        return "register"+Helper.defaultHelper.snakeCaseToCamelCase(this.initName)+".php";
+
+    public String getCreateControllerFileName() {
+        return "register" + Helper.defaultHelper.snakeCaseToCamelCase(this.initName) + ".php";
     }
-    
-    public String getListFileName(){
-        return Helper.defaultHelper.snakeCaseToCamelCase(this.initName)+"-list.php";
+
+    public String getListFileName() {
+        return Helper.defaultHelper.snakeCaseToCamelCase(this.initName) + "-list.php";
     }
-    
-    public String getDeleteControllerFileName(){
-        return "delete"+Helper.defaultHelper.snakeCaseToCamelCase(this.initName)+".php";
+
+    public String getDeleteControllerFileName() {
+        return "delete" + Helper.defaultHelper.snakeCaseToCamelCase(this.initName) + ".php";
     }
-    
-    public String getFormIdGenerateControllerFileName(){
-        return "generate"+Helper.defaultHelper.snakeCaseToCamelCase(this.initName)+"FormId.php";
+
+    public String getFormIdGenerateControllerFileName() {
+        return "generate" + Helper.defaultHelper.snakeCaseToCamelCase(this.initName) + "FormId.php";
     }
-    
-    public String getGetFormControllerFileName(){
-        return "get"+Helper.defaultHelper.snakeCaseToCamelCase(this.initName)+".php";
+
+    public String getGetFormControllerFileName() {
+        return "get" + Helper.defaultHelper.snakeCaseToCamelCase(this.initName) + ".php";
     }
-    
-    public String getFormFileName(){
-        return Helper.defaultHelper.snakeCaseToCamelCase(this.initName)+"-form.php";
+
+    public String getFormFileName() {
+        return Helper.defaultHelper.snakeCaseToCamelCase(this.initName) + "-form.php";
     }
-    
-    public boolean isIncludedThisInTheColumnNames(String s){
+
+    public boolean isIncludedThisInTheColumnNames(String s) {
         boolean b = false;
         for (Column column : columns) {
             if (column.getSqlName().contains(s)) {
@@ -132,4 +133,7 @@ public class Table {
         return b;
     }
 
+    public String getTableNameToDisplay() {
+        return Helper.defaultHelper.snakeCaseToDisplayWholeWord(this.initName);
+    }
 }

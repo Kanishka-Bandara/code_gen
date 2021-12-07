@@ -570,7 +570,7 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add(""
                 + "                <div class=\"row\">\n"
                 + "                    <div class=\"col-md-12 text-right\">\n"
-                + "                        <button type=\"button\" class=\"btn btn-sm btn-primary \" data-toggle=\"modal\"\n"
+                + "                        <button type=\"button\" class=\"btn btn-sm btn-primary \"  onclick=\"clearForm();\"  data-toggle=\"modal\"\n"
                 + "                                data-target=\"#newform\">\n"
                 + "                            New Registration\n"
                 + "                        </button>\n"
@@ -758,6 +758,88 @@ public class GramaCodeGenerateController {
                 + "        });\n"
                 + "    }");
 
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("    function clearForm() {");
+        controllerRegister_1_Importers.add("        generateApplicationNumber();");
+        controllerRegister_1_Importers.add("");
+        
+        s01 = new Vector<String>();
+        s02 = new Vector<String>();
+        s03 = new Vector<String>();
+        for (Column column : columns) {
+            if (column.getSqlName().equals("created_at")) {
+
+            } else if (column.getSqlName().equals("updated_at")) {
+//              
+            } else if (column.getSqlName().equals("status")) {
+//              
+            } else if (column.getSqlName().equals("form_status")) {
+
+            } else if (column.getSqlName().equals("application_no")) {
+                
+            } else if (column.getSqlName().equals("id")) {
+
+            } else {
+                if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
+                    s02.add(JSCodeGenerateController.defaultController.generateJSVariableForNullSetters(column));
+                } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
+                    s03.add(JSCodeGenerateController.defaultController.generateJSVariableForNullSetters(column));
+                } else {
+                    s01.add(JSCodeGenerateController.defaultController.generateJSVariableForNullSetters(column));
+                }
+            }
+        }
+        
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                //BEGIN::Citizen Section");
+        controllerRegister_1_Importers.add("");
+        for (String s : s01) {
+            controllerRegister_1_Importers.add(s);
+        }
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                //END::Citizen Section");
+        controllerRegister_1_Importers.add("");
+
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add(" <?php\n"
+                + "                if ($_SESSION[\"auth\"]['type'] == 3 || $_SESSION[\"auth\"]['type'] == 2 || $_SESSION[\"auth\"]['type'] == 1) {\n"
+                + "                ?>");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                //BEGIN::GS Section");
+        controllerRegister_1_Importers.add("");
+        for (String s : s02) {
+            controllerRegister_1_Importers.add(s);
+        }
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                //END::GS Section");
+        controllerRegister_1_Importers.add("                <?php\n"
+                + "                }\n"
+                + "                ?>");
+        controllerRegister_1_Importers.add("");
+
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                <?php\n"
+                + "                if ($_SESSION[\"auth\"]['type'] == 2 || $_SESSION[\"auth\"]['type'] == 1) {\n"
+                + "                ?>");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                //BEGIN::DS Section");
+        controllerRegister_1_Importers.add("");
+        for (String s : s03) {
+            controllerRegister_1_Importers.add(s);
+        }
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                //END::DS Section");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                <?php\n"
+                + "                }\n"
+                + "                ?>");
+        controllerRegister_1_Importers.add("");
+
+        
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("    }");
+        controllerRegister_1_Importers.add("");
+        
         controllerRegister_1_Importers.add("</script>");
 
         controllerRegister_1_Importers.add("</body>");

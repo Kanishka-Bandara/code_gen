@@ -15,11 +15,12 @@ public class JSCodeGenerateController {
     public static JSCodeGenerateController defaultController = new JSCodeGenerateController();
 
     public String generateJSVariableForSetters(Column c) {
-        String js = "$('#" + c.getColumnJsId() + "').val(data." + c.getSqlName() + ");";
+//        String js = "$('#" + c.getColumnJsId() + "').val(data." + c.getSqlName() + ");";
+        String js = "";
         switch (c.getColumnHtmlFieldType()) {
             case "img":
                 js = "                let " + c.getColumnJsName() + " = imageFolderPath+data." + c.getSqlName() + ";\n"
-                        + "                if (" + c.getColumnJsName() + "!=null){\n"
+                        + "                if (!$.trim(" + c.getColumnJsName() + ")){\n"
                         + "                    $(\"#" + c.getColumnJsImageSrcPreviewId() + "\").attr(\"src\", imageFolderPath+data." + c.getSqlName() + ");\n"
                         + "                }";
                 break;
@@ -36,21 +37,18 @@ public class JSCodeGenerateController {
     }
     
     public String generateJSVariableForNullSetters(Column c) {
-        String js = "$('#" + c.getColumnJsId() + "').val(data." + c.getSqlName() + ");";
+        String js = "";
         switch (c.getColumnHtmlFieldType()) {
             case "img":
-                js = "                let " + c.getColumnJsName() + " = imageFolderPath+data." + c.getSqlName() + ";\n"
-                        + "                if (" + c.getColumnJsName() + "!=null){\n"
-                        + "                    $(\"#" + c.getColumnJsImageSrcPreviewId() + "\").attr(\"src\", imageFolderPath+data." + c.getSqlName() + ");\n"
-                        + "                }";
+                js = "                    $(\"#" + c.getColumnJsImageSrcPreviewId() + "\").attr(\"src\", '/grama/Views/assets/img/sign_here.jpg');";
                 break;
             case "cb":
                 break;
             case "rb":
-                js = "                $('#" + c.getColumnJsId() + "' + data." + c.getSqlName() + ").attr('checked', true);";
+//                js = "                $('#" + c.getColumnJsId() + "' + data." + c.getSqlName() + ").attr('checked', true);";
                 break;
             default:
-                js = "$('#" + c.getColumnJsId() + "').val(data." + c.getSqlName() + ");";
+                js = "$('#" + c.getColumnJsId() + "').val(null);";
                 break;
         }
         return js;
