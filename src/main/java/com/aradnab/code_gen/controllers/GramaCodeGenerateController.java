@@ -172,9 +172,19 @@ public class GramaCodeGenerateController {
                     controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_DS) {");
                 }
                 if (column.getColumnHtmlFieldType().equals("img")) {
-                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = $_FILES['" + column.getColumnNameInCamelCase() + "'];");
-                    controllerRegister_1_Importers.add("if (isset(" + column.getColumnNameAsPHPVariable() + ")) {");
-                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = ImageHelper::saveImage(" + column.getColumnNameAsPHPVariable() + ");");
+                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = null;");
+                    controllerRegister_1_Importers.add("if(!(!isset($_FILES['" + column.getColumnNameInCamelCase() + "']) || $_FILES['" + column.getColumnNameInCamelCase() + "']['error'] == UPLOAD_ERR_NO_FILE)) {");
+//                    controllerRegister_1_Importers.add("");
+//                    controllerRegister_1_Importers.add("if (isset(" + column.getColumnNameAsPHPVariable() + ")) {");
+                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = ImageHelper::saveImage($_FILES['" + column.getColumnNameInCamelCase() + "']);");
+                    controllerRegister_1_Importers.add("}else{");
+                    controllerRegister_1_Importers.add("    if ($formType != $_FORM_TYPE_SAVE) {");
+                    controllerRegister_1_Importers.add("        $findStatement = $pdo->prepare('SELECT * FROM `"+table.getSQLName()+"` WHERE `id`=:id');");
+                    controllerRegister_1_Importers.add("        $findStatement->bindParam(':id', $formId, PDO::PARAM_INT);");
+                    controllerRegister_1_Importers.add("        $findStatement->execute();");
+                    controllerRegister_1_Importers.add("        $getRecord=$findStatement->fetchAll(PDO::FETCH_ASSOC);");
+                    controllerRegister_1_Importers.add("        "+column.getColumnNameAsPHPVariable()+" = $getRecord[0]['"+column.getSqlName()+"'];");
+                    controllerRegister_1_Importers.add("    }");
                     controllerRegister_1_Importers.add("}");
                 } else {
                     controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = $_POST['" + column.getColumnNameInCamelCase() + "'];");
