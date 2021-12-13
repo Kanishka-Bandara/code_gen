@@ -217,7 +217,13 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("");
         columns.forEach(column -> {
             if (column.getSqlName().equals("created_at")) {
+                controllerRegister_1_Importers.add("");
+                controllerRegister_1_Importers.add("if ($formType == $_FORM_TYPE_SAVE) {");
+                controllerRegister_1_Importers.add("");
                 controllerRegister_1_Importers.add("$processData['" + column.getSqlName() + "'] = date('Y-m-d H:i:s');");
+                controllerRegister_1_Importers.add("");
+                controllerRegister_1_Importers.add("}");
+                controllerRegister_1_Importers.add("");
             } else if (column.getSqlName().equals("updated_at")) {
                 controllerRegister_1_Importers.add("$processData['" + column.getSqlName() + "'] = date('Y-m-d H:i:s');");
             } else if (column.getSqlName().equals("status")) {
@@ -240,23 +246,24 @@ public class GramaCodeGenerateController {
                 controllerRegister_1_Importers.add("\t$processData['" + column.getSqlName() + "'] = $formId;");
                 controllerRegister_1_Importers.add("}");
             } else {
+//BEGIN::123456
+
                 if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
                     controllerRegister_1_Importers.add("$processData['" + column.getSqlName() + "'] = null;");
-//                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = null;");
                     controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_GS) {");
                 } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
                     controllerRegister_1_Importers.add("$processData['" + column.getSqlName() + "'] = null;");
-//                    controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = null;");
                     controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_DS) {");
                 }
-
                 controllerRegister_1_Importers.add("$processData['" + column.getSqlName() + "'] = " + column.getColumnNameAsPHPVariable() + ";");
-
                 if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
                     controllerRegister_1_Importers.add("}");
                 } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
                     controllerRegister_1_Importers.add("}");
                 }
+
+                //------------
+//ENDsss::123456
             }
         });
         controllerRegister_1_Importers.add("");
@@ -596,8 +603,17 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("                                <tbody>");
         controllerRegister_1_Importers.add("");
 
-        controllerRegister_1_Importers.add("                                <?php\n"
-                + "                                $query = \"SELECT * FROM " + table.getSQLName() + " WHERE status <> \" . $_STATUS_DELETE . \";\";\n"
+        controllerRegister_1_Importers.add("                                <?php\n");
+        controllerRegister_1_Importers.add("                                $query = \"SELECT * FROM " + table.getSQLName() + " WHERE status <> \" . $_STATUS_DELETE . \";\";\n");
+        controllerRegister_1_Importers.add("                                $filterStatus = null;\n"
+                + "                                if (isset($_GET['filter'])){\n"
+                + "                                    $filterStatus = $_GET['filter'];\n"
+                + "                                    if (($filterStatus==0)||($filterStatus==1)||($filterStatus==2)){\n"
+                + "                                        $query = \"SELECT * FROM " + table.getSQLName() + " WHERE status <> \" . $_STATUS_DELETE . \" AND form_status = \".$filterStatus.\";\";\n"
+                + "                                    }\n"
+                + "                                }");
+        controllerRegister_1_Importers.add(""
+                + ""
                 + "                                $findStatement = $pdo->prepare($query);\n"
                 + "                                $findStatement->execute();\n"
                 + "                                if ($records = $findStatement->fetchAll(PDO::FETCH_ASSOC)) {\n"
@@ -682,6 +698,7 @@ public class GramaCodeGenerateController {
         Vector<String> s01 = new Vector<String>();
         Vector<String> s02 = new Vector<String>();
         Vector<String> s03 = new Vector<String>();
+        s01.add("$('#form_type').val(2);");
         for (Column column : columns) {
             if (column.getSqlName().equals("created_at")) {
 
@@ -694,7 +711,7 @@ public class GramaCodeGenerateController {
             } else if (column.getSqlName().equals("application_no")) {
                 s01.add("$('#applicationNo').val(data." + column.getSqlName() + ");");
             } else if (column.getSqlName().equals("id")) {
-
+                s01.add("$('#form_id').val(data." + column.getSqlName() + ");");
             } else {
                 if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
                     s02.add(JSCodeGenerateController.defaultController.generateJSVariableForSetters(column));
@@ -883,9 +900,9 @@ public class GramaCodeGenerateController {
 
         for (Table table : tables) {
             controllerRegister_1_Importers.add("    <li class=\"nav-item\">\n"
-                    + "        <a class=\"nav-link collapsed\" href=\""+table.getListFileName()+"\">\n"
+                    + "        <a class=\"nav-link collapsed\" href=\"" + table.getListFileName() + "\">\n"
                     + "            <i class=\"fa fa-file-text-o\"></i>\n"
-                    + "            <span>"+table.getTableNameToDisplay()+"</span>\n"
+                    + "            <span>" + table.getTableNameToDisplay() + "</span>\n"
                     + "        </a>\n"
                     + "    </li>");
         }
