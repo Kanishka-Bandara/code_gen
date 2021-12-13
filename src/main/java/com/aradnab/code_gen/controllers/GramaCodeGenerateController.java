@@ -592,9 +592,9 @@ public class GramaCodeGenerateController {
                 + "                        <select name=\"filter_tag\" class=\"form-control\" id=\"filter_tag\" onchange=\"filterForm(this);\">\n"
                 + "                            <option disabled selected>--Select filter--</option>\n"
                 + "                            <option value=\"-5\">All</option>\n"
-                + "                            <option value=\"0\">Submitted</option>\n"
-                + "                            <option value=\"1\">Approved</option>\n"
-                + "                            <option value=\"2\">Finalized</option>\n"
+                + "                            <option value=\"1\">Submitted</option>\n"
+                + "                            <option value=\"2\">Approved</option>\n"
+                + "                            <option value=\"3\">Finalized</option>\n"
                 + "                        </select>\n"
                 + "                    </div>");
         controllerRegister_1_Importers.add("                    <div class=\"col-4\">\n"
@@ -629,7 +629,7 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("                                $filterStatus = null;\n"
                 + "                                if (isset($_GET['filter'])){\n"
                 + "                                    $filterStatus = $_GET['filter'];\n"
-                + "                                    if (($filterStatus==0)||($filterStatus==1)||($filterStatus==2)){\n"
+                + "                                    if (($filterStatus==1)||($filterStatus==2)||($filterStatus==3)){\n"
                 + "                                        $query = \"SELECT * FROM " + table.getSQLName() + " WHERE status <> \" . $_STATUS_DELETE . \" AND form_status = \".$filterStatus.\";\";\n"
                 + "                                    }\n"
                 + "                                }");
