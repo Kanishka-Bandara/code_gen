@@ -577,15 +577,26 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("            <div class=\"container-fluid\">");
         controllerRegister_1_Importers.add("");
         //TODO::Can change the add new butto
-        controllerRegister_1_Importers.add(""
-                + "                <div class=\"row\">\n"
-                + "                    <div class=\"col-md-12 text-right\">\n"
-                + "                        <button type=\"button\" class=\"btn btn-sm btn-primary \"  onclick=\"clearForm();\"  data-toggle=\"modal\"\n"
+        controllerRegister_1_Importers.add("                <div class=\"row\">\n");
+        controllerRegister_1_Importers.add("                    <div class=\"col-2\">\n"
+                + "                        <select name=\"filter_tag\" class=\"form-control\" id=\"filter_tag\" onchange=\"filterForm(this);\">\n"
+                + "                            <option disabled selected>--Select filter--</option>\n"
+                + "                            <option value=\"-5\">All</option>\n"
+                + "                            <option value=\"0\">Submitted</option>\n"
+                + "                            <option value=\"1\">Approved</option>\n"
+                + "                            <option value=\"2\">Finalized</option>\n"
+                + "                        </select>\n"
+                + "                    </div>");
+        controllerRegister_1_Importers.add("                    <div class=\"col-4\">\n"
+                + "                        <button type=\"button\" class=\"btn btn-primary \" onclick=\"clearForm()\"\n"
+                + "                                data-toggle=\"modal\"\n"
                 + "                                data-target=\"#newform\">\n"
                 + "                            New Registration\n"
                 + "                        </button>\n"
-                + "                    </div>\n"
-                + "                </div>");
+                + "                    </div>");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                </div>");
+        controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("                <div class=\"row mt-3\">");
         controllerRegister_1_Importers.add("                    <div class=\"col-md-12\">");
@@ -857,6 +868,13 @@ public class GramaCodeGenerateController {
 
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("    }");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("    function filterForm(obj) {\n"
+                + "        let status = obj.value;\n"
+                + "        location.replace('" + table.getListFileName() + "?filter='+status);\n"
+                + "    }");
+        controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("");
 
         controllerRegister_1_Importers.add("</script>");
