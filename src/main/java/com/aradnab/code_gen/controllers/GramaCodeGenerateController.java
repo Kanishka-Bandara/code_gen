@@ -166,7 +166,7 @@ public class GramaCodeGenerateController {
             } else {
                 if (column.getColumnHtmlSection().toLowerCase().equals("s2")) {
                     controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = null;");
-                    controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_GS) {");
+                    controllerRegister_1_Importers.add("if (($userType == $_USER_TYPE_GS)) {");
                 } else if (column.getColumnHtmlSection().toLowerCase().equals("s3")) {
                     controllerRegister_1_Importers.add(column.getColumnNameAsPHPVariable() + " = null;");
                     controllerRegister_1_Importers.add("if ($userType == $_USER_TYPE_DS) {");
@@ -556,33 +556,8 @@ public class GramaCodeGenerateController {
         controllerRegister_1_Importers.add("    <?php include 'dashboard-sidebar.php'; ?>");
         controllerRegister_1_Importers.add("    <div id=\"content-wrapper\" class=\"d-flex flex-column\">");
         controllerRegister_1_Importers.add("        <div id=\"content\">");
-        controllerRegister_1_Importers.add("            <nav class=\"navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow\">\n"
-                + "                <form class=\"form-inline\">\n"
-                + "                    <button id=\"sidebarToggleTop\" class=\"btn btn-link d-md-none rounded-circle mr-3\">\n"
-                + "                        <i class=\"fa fa-bars\"></i>\n"
-                + "                    </button>\n"
-                + "                </form>\n"
-                + "                <ul class=\"navbar-nav ml-auto\">\n"
-                + "                    <div class=\"topbar-divider d-none d-sm-block\"></div>\n"
-                + "                    <!-- Nav Item - User Information -->\n"
-                + "                    <li class=\"nav-item dropdown no-arrow\">\n"
-                + "                        <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"userDropdown\" role=\"button\"\n"
-                + "                           data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n"
-                + "                            <span class=\"mr-2 d-none d-lg-inline text-gray-600 small\"><?php print_r($_SESSION[\"auth\"]['name']) ?></span>\n"
-                + "                            <img class=\"img-profile rounded-circle\"\n"
-                + "                                 src=\"https://www.pngfind.com/pngs/m/470-4703547_icon-user-icon-hd-png-download.png\">\n"
-                + "                        </a>\n"
-                + "                        <!-- Dropdown - User Information -->\n"
-                + "                        <div class=\"dropdown-menu dropdown-menu-right shadow animated--grow-in\"\n"
-                + "                             aria-labelledby=\"userDropdown\">\n"
-                + "                            <a class=\"dropdown-item\" href=\"../Controllers/logout.php\">\n"
-                + "                                <i class=\"fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400\"></i>\n"
-                + "                                Logout\n"
-                + "                            </a>\n"
-                + "                        </div>\n"
-                + "                    </li>\n"
-                + "                </ul>\n"
-                + "            </nav>");
+        controllerRegister_1_Importers.add("");
+        controllerRegister_1_Importers.add("                <?php include 'dashboard-top-navbar.php'; ?>");
         controllerRegister_1_Importers.add("");
         controllerRegister_1_Importers.add("            <div class=\"container-fluid\">");
         controllerRegister_1_Importers.add("");
