@@ -100,6 +100,7 @@ public class Column {
        return "$"+this.getColumnNameInCamelCase();
     }
     public String getColumnHtmlFieldType(){
+        System.out.println(this.sqlName);
         return this.sqlName.split("_")[2];
     }
     
@@ -107,10 +108,46 @@ public class Column {
         return this.sqlName.split("_")[0];
     }
     
-    public String getHtmlName(){
-        String name = "";
-            
-        return name;
+    public int getColumnHtmlNumber(){
+        System.out.println(this.getSqlName());
+        return Integer.parseInt(this.sqlName.split("_")[1].replaceAll("n", "").trim());
+    }
+    
+    public String getColumnHtmlNameToDisplay(){
+        return Helper.defaultHelper.snakeCaseToDisplay(this.sqlName);
+    }
+    
+    public String getColumnHtmlLabelId(){
+        return "lebel_"+this.getColumnNameInCamelCase();
+    }
+    
+    
+    public String getColumnJsId(){
+       return "id_"+Helper.defaultHelper.snakeCaseToCamelCase(this.sqlName);
+    }
+    
+    public String getColumnJsName(){
+       return Helper.defaultHelper.snakeCaseToCamelCase(this.sqlName);
+    }
+    
+    public String getColumnJsSectionId(){
+       return "id_section_"+Helper.defaultHelper.snakeCaseToCamelCase(this.sqlName);
+    }
+    
+    public String getColumnJsLabelId(){
+       return "id_lbl_"+Helper.defaultHelper.snakeCaseToCamelCase(this.sqlName);
+    }
+    
+    public String getColumnJsImageSrcPreviewId(){
+       return "id_img_display_"+Helper.defaultHelper.snakeCaseToCamelCase(this.sqlName);
+    }
+    
+    public String getColumnJsImagePreviewSectionId(){
+       return "id_img_display_section_"+Helper.defaultHelper.snakeCaseToCamelCase(this.sqlName);
+    }
+    
+    public String getColumnJsImageSrcPreviewName(){
+       return "name_img_display_"+Helper.defaultHelper.snakeCaseToCamelCase(this.sqlName);
     }
     
 }
